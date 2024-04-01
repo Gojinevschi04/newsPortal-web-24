@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace NewsPortal.Domain.Entities.User
 {
-     internal class ULoginData
+     public class ULoginData
      {
+          public string Credential { get; set; }
+          public string Password { get; set; }
+          public string LoginIp { get; set; }
+          public DateTime LoginDateTime { get; set; }
      }
 }

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NewsPortal.BusinessLogic.Core;
+using NewsPortal.BusinessLogic.Interfaces;
+using NewsPortal.Domain.Entities.User;
+
 
 namespace NewsPortal.BusinessLogic
 {
-     internal class SessionBL
+     public class SessionBL: UserApi, ISession    
      {
+          public ULoginResp UserLogin(ULoginData data)
+          {
+               return UserLoginAction(data);
+          }
      }
 }

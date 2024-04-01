@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NewsPortal.Domain.Entities.User;
 
 namespace NewsPortal.BusinessLogic.Interfaces
 {
-     internal interface ISession
+     public interface ISession
      {
+          ULoginResp UserLogin(ULoginData data);
      }
 }

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using NewsPortal.Domain.Entities.User;
 
 namespace NewsPortal.BusinessLogic.Core
 {
-     internal class UserApi
+     public class UserApi
      {
+          public ULoginResp UserLoginAction(ULoginData data)
+          {
+               return new ULoginResp();
+          }
      }
 }
