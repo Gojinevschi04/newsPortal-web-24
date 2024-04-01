@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewsPortal.BusinessLogic.Core
 {
-     internal class AdminAPI
+     internal class AdminApi
      {
      }
 }
