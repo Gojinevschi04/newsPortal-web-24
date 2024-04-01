@@ -1932,6 +1932,16 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NewsPortal.BusinessLogic\NewsPortal.BusinessLogic.csproj">
+      <Project>{ec2fb5aa-1443-4d2f-9573-2dd4a6c656e7}</Project>
+      <Name>NewsPortal.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NewsPortal.Domain\NewsPortal.Domain.csproj">
+      <Project>{3204a966-41f1-4a9f-a678-e843c1ee07bc}</Project>
+      <Name>NewsPortal.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
