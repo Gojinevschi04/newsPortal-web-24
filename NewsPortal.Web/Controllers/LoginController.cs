@@ -41,17 +41,17 @@ namespace NewsPortal.Web.Controllers
                 };
 
                 var userLogin = _session.UserLogin(data);
-                // if (userLogin.Status)
-                // {
-                //     //ADD COOKIE
-                //
-                //     return RedirectToAction("Index", "Home");
-                // }
-                // else
-                // {
-                //     ModelState.AddModelError("", userLogin.StatusMsg);
-                //     return View();
-                // }
+                if (userLogin.Status)
+                {
+                    //ADD COOKIE
+                
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", userLogin.StatusMsg);
+                    return View();
+                }
             }
 
             return View();
