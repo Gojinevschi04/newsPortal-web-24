@@ -27,7 +27,7 @@ namespace NewsPortal.Web.Controllers
         }
         
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Index(UserLogin login)
         {
             if (ModelState.IsValid)
