@@ -18,6 +18,18 @@ namespace NewsPortal.Web
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "About",
+                url: "About",
+                defaults: new { controller = "Home", action = "About", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Contact",
+                url: "Contact",
+                defaults: new { controller = "Home", action = "Contact", id = UrlParameter.Optional }
+            );
         }
     }
 }
