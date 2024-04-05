@@ -1,5 +1,6 @@
 ﻿using NewsPortal.BusinessLogic.Interfaces;
 
+
 namespace NewsPortal.BusinessLogic
 {
      public class BusinessLogic
@@ -7,6 +8,7 @@ namespace NewsPortal.BusinessLogic
           public ISession GetSessionBL()
           {
                return new SessionBL();
+
           }
      }
 }

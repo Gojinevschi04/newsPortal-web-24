@@ -11,5 +11,10 @@ namespace NewsPortal.BusinessLogic
           {
                return UserLoginAction(data);
           }
+
+          public ULoginResp URegisterAction(URegisterData data)
+          {
+               return RegisterData(data);
+          }
      }
 }
