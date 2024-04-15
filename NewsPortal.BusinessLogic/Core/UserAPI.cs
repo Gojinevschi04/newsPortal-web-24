@@ -12,12 +12,24 @@ namespace NewsPortal.BusinessLogic.Core
 
                using (var db = new UserContext())
                {
-                    user = db.Users.FirstOrDefault(u => u.Username == data.Credential);
+                    user = db.Users.FirstOrDefault(u => u.Email == data.Email);
                }
 
 
+               if (user == null)
+               {
+                    return new ULoginResp { Status = false, StatusMsg = "User not found" };
+               }
+               else
+               {
+                    if (user.Password != data.Password)
+                    {
+                         return new ULoginResp { Status = false, StatusMsg = "Incorect password" };
+                    }
+                    return new ULoginResp { Status = true };
+               }
 
-               return new ULoginResp();
+
           }
 
           public ULoginResp RegisterData(URegisterData data)
@@ -25,9 +37,14 @@ namespace NewsPortal.BusinessLogic.Core
 
                var newUser = new UDbTable
                {
-                    Username = data.Username,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
                     Email = data.Email,
-                    Password = data.Password
+                    Password = data.Password,
+                    Username = data.Username,
+                    LastIp = data.Ip,
+                    LastLogin = data.LoginDataTime,
+                    Level = Domain.Enums.URole.None
                };
 
                using (var db = new UserContext())
