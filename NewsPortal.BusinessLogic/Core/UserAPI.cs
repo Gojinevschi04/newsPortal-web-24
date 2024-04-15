@@ -139,7 +139,7 @@ namespace NewsPortal.BusinessLogic.Core
                 Email = curentUser.Email,
                 LastLogin = DateTime.Now,
                 LasIp = "0.0.0.0",
-                Level = URole.None
+                Level = URole.User
             };
 
             // Mapper.Initialize(cfg => cfg.CreateMap<UDbTable, UserMinimal>());

@@ -5,7 +5,7 @@ namespace NewsPortal.BusinessLogic.DbModel
 {
     public class SessionContext : DbContext
     {
-        public SessionContext() : base("name=CCToolShop")
+        public SessionContext() : base("name=WebDataBase")
         {
         }
 
