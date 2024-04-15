@@ -44,7 +44,8 @@ namespace NewsPortal.Web.Controllers
                     var userLogin = _session.UserLogin(data);
                     if (userLogin.Status)
                     {
-
+                         HttpCookie cookie = _session.GenCookie(login.Email);
+                         ControllerContext.HttpContext.Response.Cookies.Add(cookie);
                          return RedirectToAction("Index", "Home");
                     }
                     else

@@ -39,7 +39,7 @@ namespace NewsPortal.Controllers
                     Username = login.Username,
                     Email = login.Email,
                     LoginDataTime = DateTime.Now,
-                    Ip = "0.0.0.0"
+                    Ip = Request.UserHostAddress
                };
 
                ULoginResp resp = _sesion.URegisterAction(URData);
