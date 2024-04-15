@@ -14,7 +14,7 @@ namespace NewsPortal.Domain.Entities.User
 
         [Required]
         [Display(Name = "Username")]
-       // [StringLength(8,  ErrorMessage = "Username cannot be longer than 30 characters.")]
+        // [StringLength(8,  ErrorMessage = "Username cannot be longer than 30 characters.")]
         public string Username { get; set; }
 
         [Required]
@@ -24,7 +24,7 @@ namespace NewsPortal.Domain.Entities.User
 
         [Required]
         [Display(Name = "Email Address")]
-       // [StringLength(5)]
+        // [StringLength(5)]
         public string Email { get; set; }
 
         [Required]
@@ -33,13 +33,12 @@ namespace NewsPortal.Domain.Entities.User
         public string FirstName { get; set; }
 
 
-          [Required]
-          [Display(Name = "Last Name")]
-         // [StringLength(5)]
-          public string LastName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        // [StringLength(5)]
+        public string LastName { get; set; }
 
-        [DataType(DataType.Date)] 
-        public DateTime LastLogin { get; set; }
+        [DataType(DataType.Date)] public DateTime LastLogin { get; set; }
 
         public string LastIp { get; set; }
 

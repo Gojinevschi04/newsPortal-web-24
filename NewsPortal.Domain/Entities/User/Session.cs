@@ -11,14 +11,10 @@ namespace NewsPortal.Domain.Entities.User
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SessionId { get; set; }
 
-        [Required]
-        [StringLength(30)]
-        public string Username { get; set; }
+        [Required] [StringLength(30)] public string Username { get; set; }
 
-        [Required]
-        public string CookieString { get; set; }
+        [Required] public string CookieString { get; set; }
 
-        [Required]
-        public DateTime ExpireTime { get; set; }
+        [Required] public DateTime ExpireTime { get; set; }
     }
 }
