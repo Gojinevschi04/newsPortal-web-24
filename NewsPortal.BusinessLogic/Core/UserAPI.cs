@@ -28,9 +28,9 @@ namespace NewsPortal.BusinessLogic.Core
             }
             else
             {
-                if (user.Password != data.Password)
+                if (user.Password != LoginHelper.HashGen(data.Password))
                 {
-                    return new ULoginResp { Status = false, StatusMsg = "Incorect password" };
+                    return new ULoginResp { Status = false, StatusMsg = "Incorrect password or username" };
                 }
 
                 return new ULoginResp { Status = true };
