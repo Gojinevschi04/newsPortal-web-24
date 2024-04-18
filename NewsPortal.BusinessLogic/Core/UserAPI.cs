@@ -44,11 +44,11 @@ namespace NewsPortal.BusinessLogic.Core
                 FirstName = data.FirstName,
                 LastName = data.LastName,
                 Email = data.Email,
-                Password = data.Password,
+                Password = LoginHelper.HashGen(data.Password),
                 Username = data.Username,
                 LastIp = data.Ip,
                 LastLogin = data.LoginDataTime,
-                Level = Domain.Enums.URole.None
+                Level = Domain.Enums.URole.User
             };
 
             using (var db = new UserContext())
