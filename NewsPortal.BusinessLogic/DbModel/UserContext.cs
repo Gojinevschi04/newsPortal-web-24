@@ -3,9 +3,9 @@ using NewsPortal.Domain.Entities.User;
 
 namespace NewsPortal.BusinessLogic.DbModel
 {
-    public class UserContext: DbContext
+    public class UserContext : DbContext
     {
-        public UserContext() : 
+        public UserContext() :
             base("name=WebDataBase") // connectionstring name define in your web.config
         {
         }
