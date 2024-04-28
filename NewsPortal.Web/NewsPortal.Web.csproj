@@ -1878,6 +1878,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\sb-admin-2.js" />
     <Content Include="Scripts\sb-admin-2.min.js" />
+    <Content Include="Views\Admin\Comments.cshtml" />
+    <Content Include="Views\Admin\Posts.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Listing\Index.cshtml" />
     <Content Include="Views\Listing\ListingParameters.cshtml" />

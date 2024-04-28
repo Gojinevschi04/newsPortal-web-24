@@ -1,4 +1,5 @@
-﻿<!-- Sidebar -->
+﻿@using NewsPortal.Domain.Enums
+<!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
@@ -31,7 +32,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
 
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link collapsed" href="#"
            aria-controls="collapseTwo">
             <span>News</span>
@@ -54,39 +55,59 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Addons
-    </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-           aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="@Url.Action("Index", "Login")">Login</a>
-                <a class="collapse-item" href="@Url.Action("Index", "Login")">Register</a>
-                <div class="collapse-divider"></div>
-            </div>
-        </div>
-    </li>
+    @{
+        var authUser = TempData["AuthenticatedUser"] as NewsPortal.Domain.Entities.User.UserMinimal;
+        if (authUser != null)
+        {
+            if (authUser.Level == URole.Admin || authUser.Level == URole.Reporter)
+            {
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Addons
+                </div>
+            }
 
+            if (authUser.Level == URole.Admin)
+            {
+                <li class="nav-item active">
 
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="@Url.Action("Users", "Admin")">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span>
-        </a>
-    </li>
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">
+                                <i class="fas fa-fw fa-table"></i>
+                                Tables:
+                            </h6>
+                            <a class="collapse-item" href="@Url.Action("Posts", "Admin")">Posts</a>
+                            <a class="collapse-item" href="@Url.Action("Users", "Admin")">Users</a>
+                            <a class="collapse-item" href="@Url.Action("Comments", "Admin")">Comments</a>
+                        </div>
+                    </div>
+                </li>
+            }
 
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
+            if (authUser.Level == URole.Reporter)
+            {
+                <li class="nav-item active">
+
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">
+                                <i class="fas fa-fw fa-folder"></i>
+                                Pages:
+                            </h6>
+                            <a class="collapse-item" href="@Url.Action("Index", "Home")">Add post</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "Home")">Edit post</a>
+                            <a class="collapse-item" href="@Url.Action("Index", "Home")">View all posts</a>
+                        </div>
+                    </div>
+                </li>
+            }
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+        }
+    }
 
 
 </ul>
