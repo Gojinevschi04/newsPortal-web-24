@@ -1880,6 +1880,7 @@
     <Content Include="Scripts\sb-admin-2.min.js" />
     <Content Include="Views\Admin\Users.cshtml" />
     <Content Include="Views\Listing\Index.cshtml" />
+    <Content Include="Views\Listing\ListingParameters.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Post\AddPost.cshtml" />
     <Content Include="Views\Post\Detail.cshtml" />
@@ -1910,6 +1911,7 @@
     <Compile Include="Extension\HttpsContextExtension.cs" />
     <Compile Include="Extension\SessionExtensions.cs" />
     <Compile Include="Filters\AdminMod.cs" />
+    <Compile Include="Filters\AuthenticationStatus.cs" />
     <Compile Include="Filters\AuthorizedMod.cs" />
     <Compile Include="Filters\ReporterMod.cs" />
     <Compile Include="Global.asax.cs">

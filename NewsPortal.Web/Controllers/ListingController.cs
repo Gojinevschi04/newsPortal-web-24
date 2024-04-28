@@ -19,7 +19,7 @@ namespace NewsPortal.Web.Controllers
             _session = bl.GetSessionBL();
             _post = bl.GetPostBL();
         }
-        
+
         public ActionResult Index()
         {
             var model = new ListingPageData();
@@ -39,6 +39,45 @@ namespace NewsPortal.Web.Controllers
                 Title = post.Title,
                 Content = post.Content,
             }).ToList();
+
+            return View(model);
+        }
+
+        public ActionResult ListingSearch(string category)
+        {
+            if (category != null)
+            {
+                var data = _post.GetPostsByCategory(category);
+                if (data.Count() > 0)
+                {
+                    TempData["postsByCategory"] = data;
+                    return RedirectToAction("ListingParameters");
+                }
+            }
+
+            return RedirectToAction("ListingParameters");
+        }
+
+        public ActionResult ListingParameters()
+        {
+            var model = new ListingPageData();
+            var sideBar = new SideBarData();
+            using (var db = new PostContext())
+            {
+                var category = db.Posts.Select(a => a.Category).Distinct().ToList();
+                sideBar.CategoryList = category;
+            }
+
+            model.SideBar = sideBar;
+
+            if (TempData["postsByCategory"] is List<PostMinimal> postsBySearchWrap && postsBySearchWrap.Any())
+            
+            {
+                model.ListingItems = postsBySearchWrap;
+                return View(model);
+            }
+
+            if (model.ListingItems == null) return View(model);
 
             return View(model);
         }

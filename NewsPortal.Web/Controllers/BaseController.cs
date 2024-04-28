@@ -4,9 +4,11 @@ using System.Web.Mvc;
 using NewsPortal.BusinessLogic;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Web.Extension;
+using NewsPortal.Web.Filters;
 
 namespace NewsPortal.Web.Controllers
 {
+    [AuthenticationStatus]
     public class BaseController : Controller
     {
         private readonly ISession _session;

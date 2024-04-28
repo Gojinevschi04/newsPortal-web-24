@@ -17,9 +17,9 @@ namespace NewsPortal.BusinessLogic.Core
                 DateAdded = data.DateAdded,
                 Author = data.Author
             };
-            
+
             var response = new ServiceResponse();
-            
+
             try
             {
                 using (var db = new PostContext())
@@ -41,7 +41,29 @@ namespace NewsPortal.BusinessLogic.Core
 
             return response;
         }
-        
-        
+
+        public IEnumerable<PostMinimal> ReturnPostsByCategory(string category)
+        {
+            List<PostMinimal> list = new List<PostMinimal>();
+            using (var db = new PostContext())
+            {
+                var results = db.Posts.Where(a => a.Category == category);
+
+                foreach (var item in results)
+                {
+                    var postMinimal = new PostMinimal
+                    {
+                        Id = item.Id,
+                        Title = item.Title,
+                        Content = item.Content,
+                        Category = item.Category
+                    };
+
+                    list.Add(postMinimal);
+                }
+            }
+
+            return list.ToList();
+        }
     }
 }
