@@ -16,8 +16,7 @@ namespace NewsPortal.Domain.Entities.Post
 
         [Display(Name = "Content")] public string Content { get; set; }
         [Display(Name = "Category")] public string Category { get; set; }
-
-
+        
         [DataType(DataType.Date)] public DateTime DateAdded { get; set; }
 
         [Display(Name = "Author")] public string Author { get; set; }

@@ -65,5 +65,30 @@ namespace NewsPortal.BusinessLogic.Core
 
             return list.ToList();
         }
+
+        public IEnumerable<PostMinimal> ReturnPostsByAuthor(string author)
+        {
+            List<PostMinimal> list = new List<PostMinimal>();
+            using (var db = new PostContext())
+            {
+                var results = db.Posts.Where(a => a.Author == author);
+
+                foreach (var item in results)
+                {
+                    var postMinimal = new PostMinimal
+                    {
+                        Id = item.Id,
+                        Title = item.Title,
+                        Content = item.Content,
+                        Category = item.Category,
+                        DateAdded = item.DateAdded
+                    };
+
+                    list.Add(postMinimal);
+                }
+            }
+
+            return list.ToList();
+        }
     }
 }

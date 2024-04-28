@@ -1887,6 +1887,8 @@
     <Content Include="Views\Post\AddPost.cshtml" />
     <Content Include="Views\Post\Detail.cshtml" />
     <Content Include="Views\Post\Index.cshtml" />
+    <Content Include="Views\Reporter\Comments.cshtml" />
+    <Content Include="Views\Reporter\Posts.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Shared\_RegisterLayout.cshtml" />
     <Content Include="Web.config" />
@@ -1910,6 +1912,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
+    <Compile Include="Controllers\ReporterController.cs" />
     <Compile Include="Extension\HttpsContextExtension.cs" />
     <Compile Include="Extension\SessionExtensions.cs" />
     <Compile Include="Filters\AdminMod.cs" />
