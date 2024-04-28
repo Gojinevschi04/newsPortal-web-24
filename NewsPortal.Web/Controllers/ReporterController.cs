@@ -39,11 +39,11 @@ namespace NewsPortal.Web.Controllers
             return View(allPosts);
         }
 
-        
-        public ActionResult EditPost(int? postId)
+
+        public ActionResult EditPost(int postId)
         {
-            if (postId == null) return View();
-            var postData = _post.GetById((int)postId);
+            var postData = _post.GetById(postId);
+
             if (postData != null)
             {
                 var postModel = new PostData()
@@ -57,9 +57,25 @@ namespace NewsPortal.Web.Controllers
                 };
                 return View(postModel);
             }
+
+            return RedirectToAction("Posts", "Reporter");
+        }
+
+
+        public ActionResult DeletePost(int postId)
+        {
+            SessionStatus();
+            var user = System.Web.HttpContext.Current.GetMySessionObject();
+            var postToDelete = _post.GetById(postId);
+            if (postToDelete == null && user.Username == postToDelete.Author)
+            {
+                return HttpNotFound();
+            }
             else
             {
-                return RedirectToAction("Index", "Login");
+                _post.Delete((int)postId);
+                _post.Save();
+                return RedirectToAction("Posts", "Admin");
             }
         }
 
