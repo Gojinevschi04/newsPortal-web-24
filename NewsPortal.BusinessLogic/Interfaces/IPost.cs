@@ -11,10 +11,10 @@ namespace NewsPortal.BusinessLogic.Interfaces
         IEnumerable<PostMinimal> GetAllByAuthor(string author);
 
         IEnumerable<PostMinimal> GetPostsByCategory(string category);
+
         // IEnumerable<PostMinimal> GetLatestPosts();
-        // IEnumerable<PostMinimal> GetPostsByType(string type);
         // void Update(PDbTable model);
-        // void Delete(int postId);
-        // void Save();
+        void Delete(int postId);
+        void Save();
     }
 }

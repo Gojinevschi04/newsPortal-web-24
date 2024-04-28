@@ -148,5 +148,29 @@ namespace NewsPortal.BusinessLogic.Core
 
             return userMinimal;
         }
+
+        public UEditData ReturnUserById(int userId)
+        {
+            using (var db = new UserContext())
+            {
+                var user = db.Users.Find(userId);
+                if (user != null)
+                {
+                    var foundUser = new UEditData()
+                    {
+                        Username = user.Username,
+                        Email = user.Email,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Id = userId
+                    };
+                    return foundUser;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

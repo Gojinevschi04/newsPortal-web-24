@@ -35,7 +35,7 @@ namespace NewsPortal.BusinessLogic
         {
             return _context.Posts.ToList();
         }
-        
+
         public IEnumerable<PostMinimal> GetAllByAuthor(string author)
         {
             return ReturnPostsByAuthor(author);
@@ -44,6 +44,20 @@ namespace NewsPortal.BusinessLogic
         public IEnumerable<PostMinimal> GetPostsByCategory(string category)
         {
             return ReturnPostsByCategory(category);
+        }
+
+        public void Delete(int PostID)
+        {
+            PDbTable model = _context.Posts.Find(PostID);
+            if (model != null)
+            {
+                _context.Posts.Remove(model);
+            }
+        }
+
+        public void Save()
+        {
+            _context.SaveChanges();
         }
     }
 }

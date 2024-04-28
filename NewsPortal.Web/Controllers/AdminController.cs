@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
+using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
@@ -23,7 +24,6 @@ namespace NewsPortal.Web.Controllers
             adminAuthenticated = System.Web.HttpContext.Current.GetMySessionObject();
         }
 
-
         public ActionResult Users()
         {
             var users = _session.GetAll();
@@ -43,6 +43,44 @@ namespace NewsPortal.Web.Controllers
             return View(allUsers);
         }
 
+        public ActionResult EditUser(int? userId)
+        {
+            if (userId == null) return View();
+            var userData = _session.GetUserById((int)userId);
+            if (userData != null)
+            {
+                var userModel = new UserData()
+                {
+                    Id = userData.Id,
+                    Username = userData.Username,
+                    FirstName = userData.FirstName,
+                    LastName = userData.LastName,
+                    Email = userData.Email,
+                    Level = userData.Level
+                };
+                return View(userModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public ActionResult DeleteUser(int? userId)
+        {
+            using (var db = new UserContext())
+            {
+                var userToDelete = db.Users.Find((int)userId);
+                if (userToDelete == null)
+                {
+                    return HttpNotFound();
+                }
+
+                db.Users.Remove(userToDelete);
+                db.SaveChanges();
+                return RedirectToAction("Users");
+            }
+        }
 
         public ActionResult Posts()
         {
@@ -61,9 +99,54 @@ namespace NewsPortal.Web.Controllers
             return View(allPosts);
         }
 
+        public ActionResult EditPost(int? postId)
+        {
+            if (postId == null) return View();
+            var postData = _post.GetById((int)postId);
+            if (postData != null)
+            {
+                var postModel = new PostData()
+                {
+                    Id = postData.Id,
+                    Title = postData.Title,
+                    Content = postData.Content,
+                    Category = postData.Category,
+                    Author = postData.Author,
+                    DateAdded = postData.DateAdded
+                };
+                return View(postModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+        
+        public ActionResult DeletePost(int? postId)
+        {
+            SessionStatus();
+            var user = System.Web.HttpContext.Current.GetMySessionObject();
+            var postToDelete = _post.GetById((int)postId);
+            if (postToDelete == null && user.Username == postToDelete.Author)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                _post.Delete((int)postId);
+                _post.Save();
+                return RedirectToAction("Posts", "Admin");
+            }
+        }
+
         public ActionResult Comments()
         {
             return View();
+        }
+
+        public ActionResult DeleteComment(int? postId)
+        {
+            return RedirectToAction("Comments", "Admin");
         }
     }
 }

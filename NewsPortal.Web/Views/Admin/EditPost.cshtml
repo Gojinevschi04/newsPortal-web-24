@@ -1,0 +1,60 @@
+@model NewsPortal.Web.Models.PostData
+
+@using (Html.BeginForm("EditPost", "Admin", FormMethod.Post))
+{
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    <div class="p-5">
+
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Edit post</h1>
+                        </div>
+                        <br>
+
+                        <form class="title">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="exampleTitle"
+                                       placeholder="Title" name="Title">
+                                @Html.TextBoxFor(a => a.Title, new { @class = "form-control", placeholder = "Title" })
+
+                                <br>
+
+                                @Html.LabelFor(a => a.Category)
+                                <select class="form-control" name="Category" required>
+                                    <option value="" disabled selected>Select a category</option>
+                                    <option value="Politics">Politics</option>
+                                    <option value="Economy">Economy</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Culture">Culture</option>
+                                    <option value="Sports">Sports</option>
+                                </select>
+                                @Html.ValidationMessageFor(a => a.Category)
+
+
+                                <div class="form-group">
+                                    <textarea class="form-control form-control-user" id="exampleContent" placeholder="Content" name="Content" rows="4"></textarea>
+                                    @Html.TextBoxFor(a => a.Content, new { @class = "form-control", placeholder = "Content" })
+
+
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <button class="btn btn-primary btn-user btn-block" type="submit">
+                                Confirm and Save
+                            </button>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
