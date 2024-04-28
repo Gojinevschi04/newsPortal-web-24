@@ -21,7 +21,6 @@ namespace NewsPortal.BusinessLogic.Core
                 user = db.Users.FirstOrDefault(u => u.Email == data.Email);
             }
 
-
             if (user == null)
             {
                 return new ULoginResp { Status = false, StatusMsg = "User not found" };
@@ -48,7 +47,7 @@ namespace NewsPortal.BusinessLogic.Core
                 Username = data.Username,
                 LastIp = data.Ip,
                 LastLogin = data.LoginDataTime,
-                Level = Domain.Enums.URole.User
+                Level = Domain.Enums.URole.Reporter
             };
 
             using (var db = new UserContext())
@@ -61,7 +60,7 @@ namespace NewsPortal.BusinessLogic.Core
             return new ULoginResp { Status = false };
         }
 
-        internal HttpCookie Cookie(string loginCredential)
+        public HttpCookie Cookie(string loginCredential)
         {
             var apiCookie = new HttpCookie("X-KEY")
             {
@@ -70,24 +69,25 @@ namespace NewsPortal.BusinessLogic.Core
 
             using (var db = new SessionContext())
             {
-                Session curent;
+                Session current;
                 var validate = new EmailAddressAttribute();
+
                 if (validate.IsValid(loginCredential))
                 {
-                    curent = (from e in db.Sessions where e.Username == loginCredential select e).FirstOrDefault();
+                    current = (from e in db.Sessions where e.Username == loginCredential select e).FirstOrDefault();
                 }
                 else
                 {
-                    curent = (from e in db.Sessions where e.Username == loginCredential select e).FirstOrDefault();
+                    current = (from e in db.Sessions where e.Username == loginCredential select e).FirstOrDefault();
                 }
 
-                if (curent != null)
+                if (current != null)
                 {
-                    curent.CookieString = apiCookie.Value;
-                    curent.ExpireTime = DateTime.Now.AddMinutes(60);
+                    current.CookieString = apiCookie.Value;
+                    current.ExpireTime = DateTime.Now.AddMinutes(60);
                     using (var todo = new SessionContext())
                     {
-                        todo.Entry(curent).State = EntityState.Modified;
+                        todo.Entry(current).State = EntityState.Modified;
                         todo.SaveChanges();
                     }
                 }
@@ -106,10 +106,10 @@ namespace NewsPortal.BusinessLogic.Core
             return apiCookie;
         }
 
-        internal UserMinimal UserCookie(string cookie)
+        public UserMinimal UserCookie(string cookie)
         {
             Session session;
-            UDbTable curentUser;
+            UDbTable currentUser;
 
             using (var db = new SessionContext())
             {
@@ -117,34 +117,36 @@ namespace NewsPortal.BusinessLogic.Core
             }
 
             if (session == null) return null;
+
             using (var db = new UserContext())
             {
                 var validate = new EmailAddressAttribute();
+
                 if (validate.IsValid(session.Username))
                 {
-                    curentUser = db.Users.FirstOrDefault(u => u.Email == session.Username);
+                    currentUser = db.Users.FirstOrDefault(u => u.Email == session.Username);
                 }
                 else
                 {
-                    curentUser = db.Users.FirstOrDefault(u => u.Username == session.Username);
+                    currentUser = db.Users.FirstOrDefault(u => u.Email == session.Username);
                 }
             }
 
-            if (curentUser == null) return null;
+            if (currentUser == null) return null;
 
-            var userminimal = new UserMinimal
+            var userMinimal = new UserMinimal
             {
-                Id = curentUser.Id,
-                Email = curentUser.Email,
+                Id = currentUser.Id,
+                Email = currentUser.Email,
                 LastLogin = DateTime.Now,
-                LasIp = "0.0.0.0",
-                Level = URole.User
+                LasIp = currentUser.LastIp,
+                Level = currentUser.Level
             };
 
             // Mapper.Initialize(cfg => cfg.CreateMap<UDbTable, UserMinimal>());
             // var userminimal = Mapper.Map<UserMinimal>(curentUser);
 
-            return userminimal;
+            return userMinimal;
         }
     }
 }

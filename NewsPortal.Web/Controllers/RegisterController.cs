@@ -9,7 +9,7 @@ using NewsPortal.Web.Models;
 
 namespace NewsPortal.Web.Controllers
 {
-    public class RegisterController : Controller
+    public class RegisterController : BaseController
     {
         private readonly ISession _session;
 

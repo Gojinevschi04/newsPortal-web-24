@@ -8,7 +8,11 @@ namespace NewsPortal.BusinessLogic
           public ISession GetSessionBL()
           {
                return new SessionBL();
-
+          }
+          
+          public IPost GetPostBL()
+          {
+               return new PostBL();
           }
      }
 }

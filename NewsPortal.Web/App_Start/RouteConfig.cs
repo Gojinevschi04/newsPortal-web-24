@@ -30,6 +30,12 @@ namespace NewsPortal.Web
                 url: "Contact",
                 defaults: new { controller = "Home", action = "Contact", id = UrlParameter.Optional }
             );
+
+            // routes.MapRoute(
+            //     name: "AddPost",
+            //     url: "AddPost",
+            //     defaults: new { controller = "Post", action = "AddPost" }
+            // );
         }
     }
 }

@@ -1,0 +1,64 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "AddPost";
+}
+
+@model NewsPortal.Web.Models.PostData
+
+@using (Html.BeginForm("Index", "Post", FormMethod.Post))
+{
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    <div class="p-5">
+
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Add a post!</h1>
+                        </div>
+                        <br>
+
+                        <form class="title">
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-user" id="exampleTitle"
+                                       placeholder="Title" name="Title">
+                                <br>
+
+
+                                <select class="form-control" name="Category" required>
+                                    <option value="" disabled selected>Select a category</option>
+                                    <option value="Politics">Politics</option>
+                                    <option value="Economy">Economy</option>
+                                    <option value="Science">Science</option>
+                                    <option value="Health">Health</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Culture">Culture</option>
+                                    <option value="Sports">Sports</option>
+                                </select>
+
+                                <br>
+
+                                <div class="form-group">
+                                    <textarea class="form-control form-control-user" id="exampleContent" placeholder="Content" name="Content" rows="4"></textarea>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <button class="btn btn-primary btn-user btn-block" type="submit">
+                                Add post
+                            </button>
+
+                        </form>
+                        <hr>
+                        <br>
+                        <br>
+                        <br>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
