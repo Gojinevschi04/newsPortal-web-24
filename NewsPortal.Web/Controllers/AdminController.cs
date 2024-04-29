@@ -103,7 +103,7 @@ namespace NewsPortal.Web.Controllers
 
         public ActionResult EditPost(int postId)
         {
-            if (postId == null) return View();
+            if (postId == 0) return View();
             var postData = _post.GetById(postId);
             if (postData != null)
             {

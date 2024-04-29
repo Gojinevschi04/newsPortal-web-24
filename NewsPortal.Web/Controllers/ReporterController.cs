@@ -29,6 +29,7 @@ namespace NewsPortal.Web.Controllers
             foreach (var post in data)
             {
                 var postMinimal = new PostMinimal();
+                postMinimal.Id = post.Id;
                 postMinimal.Title = post.Title;
                 postMinimal.Content = post.Content;
                 postMinimal.Category = post.Category;
