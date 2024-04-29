@@ -44,7 +44,7 @@ namespace NewsPortal.Web.Controllers
                         Content = postData.Content,
                         Category = postData.Category,
                         DateAdded = DateTime.Now,
-                        Author = user.Email
+                        Author = user.Username
                     };
 
                     var response = _post.AddPostAction(data);

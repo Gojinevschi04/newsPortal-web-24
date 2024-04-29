@@ -47,7 +47,7 @@ namespace NewsPortal.Web.Controllers
                 HttpCookie cookie = _session.GenCookie(login.Email);
                 ControllerContext.HttpContext.Response.Cookies.Add(cookie);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
 
             return Redirect("/Home/Index");

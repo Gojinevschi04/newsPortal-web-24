@@ -48,7 +48,7 @@ namespace NewsPortal.BusinessLogic.Core
                 Username = data.Username,
                 LastIp = data.Ip,
                 LastLogin = data.LoginDataTime,
-                Level = Domain.Enums.URole.Reporter
+                Level = Domain.Enums.URole.User
             };
 
             using (var db = new UserContext())
@@ -141,6 +141,7 @@ namespace NewsPortal.BusinessLogic.Core
                 Email = currentUser.Email,
                 LastLogin = DateTime.Now,
                 LasIp = currentUser.LastIp,
+                Username = currentUser.Username,
                 Level = currentUser.Level
             };
 

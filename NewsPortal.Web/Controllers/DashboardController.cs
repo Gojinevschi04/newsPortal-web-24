@@ -2,6 +2,7 @@ using System.Web.Mvc;
 using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.User;
+using NewsPortal.Web.Extension;
 using NewsPortal.Web.Filters;
 using NewsPortal.Web.Models;
 
@@ -16,12 +17,11 @@ namespace NewsPortal.Web.Controllers
         {
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
+            userAuthenticated = System.Web.HttpContext.Current.GetMySessionObject();
         }
-        
+
         public ActionResult UserDetail()
         {
-            //SessionStatus();
-            //var user = System.Web.HttpContext.Current.GetMySessionObject();
             var userData = _session.GetUserById(userAuthenticated.Id);
             if (userAuthenticated != null)
             {
@@ -41,32 +41,68 @@ namespace NewsPortal.Web.Controllers
             }
         }
 
+        public ActionResult EditProfile()
+        {
+            var userModel = new UserData();
+            return View(userModel);
+        }
+
+        [HttpGet]
+        public ActionResult EditProfile(int? userId)
+        {
+            if (userId == null)
+            {
+                userId = userAuthenticated.Id;
+            }
+
+            var userData = _session.GetUserById((int)userId);
+            if (userData != null)
+            {
+                var userModel = new UserData()
+                {
+                    Id = userData.Id,
+                    FirstName = userData.FirstName,
+                    LastName = userData.LastName,
+                    Username = userData.Username,
+                    Email = userData.Email,
+                    Level = userData.Level
+                };
+                return View(userModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
         [HttpPost]
         public ActionResult EditProfile(UserData data)
         {
             //SessionStatus();
             //var user = System.Web.HttpContext.Current.GetMySessionObject();
-
-            if (ModelState.IsValid)
+            if (userAuthenticated != null && data.Id == userAuthenticated.Id)
             {
-                UEditData existingUser = new UEditData
+                if (ModelState.IsValid)
                 {
-                    Id = data.Id,
-                    Username = data.Username,
-                    FirstName = data.FirstName,
-                    LastName = data.LastName,
-                    Email = data.Email,
-                    Level = data.Level
-                };
-                var response = _session.EditProfileAction(existingUser);
-                if (response.Status)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", response.StatusMessage);
-                    return View(data);
+                    UEditData existingUser = new UEditData()
+                    {
+                        Id = userAuthenticated.Id,
+                        FirstName = data.FirstName,
+                        LastName = data.LastName,
+                        Username = data.Username,
+                        Email = data.Email,
+                        Level = data.Level
+                    };
+                    var response = _session.EditProfileAction(existingUser);
+                    if (response.Status)
+                    {
+                        return RedirectToAction("UserDetail", "Dashboard");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", response.StatusMessage);
+                        return View(data);
+                    }
                 }
             }
 

@@ -26,7 +26,7 @@ namespace NewsPortal.Web.Controllers
 
         public ActionResult Posts()
         {
-            var data = _post.GetAllByAuthor(reporterAuthenticated.Email);
+            var data = _post.GetAllByAuthor(reporterAuthenticated.Username);
             List<PostMinimal> allPosts = new List<PostMinimal>();
             foreach (var post in data)
             {
