@@ -43,6 +43,20 @@ namespace NewsPortal.Web.Controllers
             return View(model);
         }
 
+        public ActionResult ListingSearchByKey(string key)
+        {
+            if (key != null)
+            {
+                var data = _post.GetPostsByKey(key);
+                if (data.Count() > 0)
+                {
+                    TempData["posts"] = data;
+                    return RedirectToAction("ListingParameters", new {key = key});
+                }
+            }
+            return RedirectToAction("Index", "Listing");
+        }
+
         public ActionResult ListingSearch(string category)
         {
             if (category != null)
@@ -50,7 +64,7 @@ namespace NewsPortal.Web.Controllers
                 var data = _post.GetPostsByCategory(category);
                 if (data.Count() > 0)
                 {
-                    TempData["postsByCategory"] = data;
+                    TempData["posts"] = data;
                     return RedirectToAction("ListingParameters");
                 }
             }
@@ -70,8 +84,7 @@ namespace NewsPortal.Web.Controllers
 
             model.SideBar = sideBar;
 
-            if (TempData["postsByCategory"] is List<PostMinimal> postsBySearchWrap && postsBySearchWrap.Any())
-            
+            if (TempData["posts"] is List<PostMinimal> postsBySearchWrap && postsBySearchWrap.Any())
             {
                 model.ListingItems = postsBySearchWrap;
                 return View(model);

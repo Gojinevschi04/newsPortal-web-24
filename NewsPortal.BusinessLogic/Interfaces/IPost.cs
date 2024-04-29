@@ -10,6 +10,8 @@ namespace NewsPortal.BusinessLogic.Interfaces
         IEnumerable<PDbTable> GetAll();
         IEnumerable<PostMinimal> GetAllByAuthor(string author);
         IEnumerable<PostMinimal> GetPostsByCategory(string category);
+        IEnumerable<PostMinimal> GetPostsByKey(string key);
+
         ServiceResponse EditPostAction(PEditData existingPost);
 
         // IEnumerable<PostMinimal> GetLatestPosts();

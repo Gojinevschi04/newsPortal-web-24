@@ -67,6 +67,37 @@ namespace NewsPortal.BusinessLogic.Core
             return list.ToList();
         }
 
+        public IEnumerable<PostMinimal> ReturnPostsByKey(string key)
+        {
+            List<PostMinimal> list = new List<PostMinimal>();
+            using (var db = new PostContext())
+            {
+                var results = db.Posts.Where(item => item.Title.Contains(key)
+                                                     || item.Content.Contains(key)
+                );
+
+                // var results = db.Posts.Where(item =>
+                //     item.Title.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
+                //     item.Content.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0
+                // );
+
+                foreach (var item in results)
+                {
+                    var postMinimal = new PostMinimal
+                    {
+                        Id = item.Id,
+                        Title = item.Title,
+                        Content = item.Content,
+                        Category = item.Category
+                    };
+
+                    list.Add(postMinimal);
+                }
+            }
+
+            return list.ToList();
+        }
+
         public IEnumerable<PostMinimal> ReturnPostsByAuthor(string author)
         {
             List<PostMinimal> list = new List<PostMinimal>();

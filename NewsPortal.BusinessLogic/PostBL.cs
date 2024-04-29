@@ -46,6 +46,11 @@ namespace NewsPortal.BusinessLogic
             return ReturnPostsByCategory(category);
         }
 
+        public IEnumerable<PostMinimal> GetPostsByKey(string key)
+        {
+            return ReturnPostsByKey(key);
+        }
+
         public void Delete(int PostID)
         {
             PDbTable model = _context.Posts.Find(PostID);
@@ -59,7 +64,7 @@ namespace NewsPortal.BusinessLogic
         {
             _context.SaveChanges();
         }
-        
+
         public ServiceResponse EditPostAction(PEditData existingPost)
         {
             return ReturnEditedPost(existingPost);
