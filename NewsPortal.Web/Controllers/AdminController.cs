@@ -57,7 +57,7 @@ namespace NewsPortal.Web.Controllers
                     Email = userData.Email,
                     Level = userData.Level
                 };
-                
+
                 return RedirectToAction("Users", "Admin");
             }
             else
@@ -89,9 +89,11 @@ namespace NewsPortal.Web.Controllers
             foreach (var post in data)
             {
                 var postMinimal = new PostMinimal();
+                postMinimal.Id = post.Id;
                 postMinimal.Title = post.Title;
                 postMinimal.Content = post.Content;
                 postMinimal.Category = post.Category;
+                postMinimal.Author = post.Author;
                 postMinimal.DateAdded = post.DateAdded;
                 allPosts.Add(postMinimal);
             }
