@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using NewsPortal.BusinessLogic.DbModel;
+using NewsPortal.Domain.Entities.Post;
 
 namespace NewsPortal.BusinessLogic
 {
@@ -53,6 +54,11 @@ namespace NewsPortal.BusinessLogic
         public UEditData GetUserById (int userId)
         {
             return ReturnUserById(userId);
+        }
+        
+        public ServiceResponse EditProfileAction(UEditData existingUser)
+        {
+            return ReturnEditedProfile(existingUser);
         }
     }
 }

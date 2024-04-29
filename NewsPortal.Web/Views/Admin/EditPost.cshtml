@@ -1,3 +1,8 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit post";
+}
+
 @model NewsPortal.Web.Models.PostData
 
 @using (Html.BeginForm("EditPost", "Admin", FormMethod.Post))
@@ -17,6 +22,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(a => a.Title)
                                 @Html.TextBoxFor(a => a.Title, new { @class = "form-control", placeholder = "Title" })
+                                @Html.ValidationMessageFor(a => a.Title)
 
                                 <br>
 
@@ -37,6 +43,8 @@
                                 <div class="form-group">
                                     @Html.LabelFor(a => a.Content)
                                     @Html.TextBoxFor(a => a.Content, new { @class = "form-control", placeholder = "Content" })
+                                    @Html.ValidationMessageFor(a => a.Content)
+
                                 </div>
                             </div>
 
@@ -45,6 +53,11 @@
                             <button class="btn btn-primary btn-user btn-block" type="submit">
                                 Confirm and Save
                             </button>
+
+                            @Html.HiddenFor(a => a.Id)
+                            @Html.HiddenFor(a => a.DateAdded)
+                            @Html.HiddenFor(a => a.Author)
+
 
                         </form>
 

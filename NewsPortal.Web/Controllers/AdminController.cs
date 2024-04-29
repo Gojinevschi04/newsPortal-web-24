@@ -5,11 +5,13 @@ using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Web.Extension;
+using NewsPortal.Web.Filters;
 using NewsPortal.Web.Models;
 
 
 namespace NewsPortal.Web.Controllers
 {
+    [AdminMod]
     public class AdminController : BaseController
     {
         public readonly ISession _session;
@@ -43,9 +45,10 @@ namespace NewsPortal.Web.Controllers
             return View(allUsers);
         }
 
-        public ActionResult EditUser(int userId)
+        public ActionResult EditUser(int? userId)
         {
-            var userData = _session.GetUserById(userId);
+            if (userId == null) return View();
+            var userData = _session.GetUserById((int)userId);
             if (userData != null)
             {
                 var userModel = new UserData()
@@ -57,8 +60,7 @@ namespace NewsPortal.Web.Controllers
                     Email = userData.Email,
                     Level = userData.Level
                 };
-
-                return RedirectToAction("Users", "Admin");
+                return View(userModel);
             }
             else
             {
@@ -66,6 +68,38 @@ namespace NewsPortal.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult EditUser(UserData data)
+        {
+            //SessionStatus();
+            //var user = System.Web.HttpContext.Current.GetMySessionObject();
+
+            if (ModelState.IsValid)
+            {
+                UEditData existingUser = new UEditData
+                {
+                    Id = data.Id,
+                    Username = data.Username,
+                    FirstName = data.FirstName,
+                    LastName = data.LastName,
+                    Email = data.Email,
+                    Level = data.Level
+                };
+                var response = _session.EditProfileAction(existingUser);
+                if (response.Status)
+                {
+                    return RedirectToAction("UserDetail", "User", new { PostID = response.PostId });
+                }
+                else
+                {
+                    ModelState.AddModelError("", response.StatusMessage);
+                    return View(data);
+                }
+            }
+
+            return View();
+        }
+        
         public ActionResult DeleteUser(int userId)
         {
             using (var db = new UserContext())
@@ -101,10 +135,10 @@ namespace NewsPortal.Web.Controllers
             return View(allPosts);
         }
 
-        public ActionResult EditPost(int postId)
+        public ActionResult EditPost(int? postId)
         {
-            if (postId == 0) return View();
-            var postData = _post.GetById(postId);
+            if (postId == null) return View();
+            var postData = _post.GetById((int)postId);
             if (postData != null)
             {
                 var postModel = new PostData()
@@ -124,12 +158,44 @@ namespace NewsPortal.Web.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult EditPost(PostData data)
+        {
+            //SessionStatus();
+            //var user = System.Web.HttpContext.Current.GetMySessionObject();
+
+            if (ModelState.IsValid)
+            {
+                PEditData existingPost = new PEditData()
+                {
+                    Id = data.Id,
+                    Title = data.Title,
+                    Content = data.Content,
+                    Category = data.Category,
+                    Author = data.Author,
+                    DateAdded = data.DateAdded
+                };
+                var response = _post.EditPostAction(existingPost);
+                if (response.Status)
+                {
+                    return RedirectToAction("Detail", "Post", new { PostID = response.PostId });
+                }
+                else
+                {
+                    ModelState.AddModelError("", response.StatusMessage);
+                    return View(data);
+                }
+            }
+
+            return View();
+        }
+
         public ActionResult DeletePost(int postId)
         {
             SessionStatus();
             var user = System.Web.HttpContext.Current.GetMySessionObject();
             var postToDelete = _post.GetById(postId);
-            if (postToDelete == null || user.Username == postToDelete.Author)
+            if (postToDelete == null)
             {
                 return HttpNotFound();
             }

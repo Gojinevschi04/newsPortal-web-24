@@ -48,7 +48,7 @@
                             </td>
 
                             <td>
-                                <form method="post" action="@Url.Action("DeleteUser", "Admin", new { userid = user.Id })" onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <form method="post" action="@Url.Action("DeleteUser", "Admin", new { userId = user.Id })" onsubmit="return confirm('Are you sure you want to delete this user?');">
                                     <button type="submit" class="btn btn-primary btn-user btn-block">Delete</button>
                                 </form>
                             </td>

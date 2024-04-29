@@ -1,3 +1,8 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit User";
+}
+
 @model NewsPortal.Web.Models.UserData
 
 @using (Html.BeginForm("EditUser", "Admin", FormMethod.Post))
@@ -18,22 +23,26 @@
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     @Html.LabelFor(a => a.FirstName)
                                     @Html.TextBoxFor(a => a.FirstName, new { @class = "form-control", placeholder = "First Name" })
+                                    @Html.ValidationMessageFor(a => a.FirstName)
 
                                 </div>
                                 <div class="col-sm-6">
                                     @Html.LabelFor(a => a.LastName)
                                     @Html.TextBoxFor(a => a.LastName, new { @class = "form-control", placeholder = "Last Name" })
+                                    @Html.ValidationMessageFor(a => a.LastName)
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(a => a.Email)
                                 @Html.TextBoxFor(a => a.Email, new { @class = "form-control", placeholder = "Email Address" })
+                                @Html.ValidationMessageFor(a => a.Email)
 
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(a => a.Username)
                                 @Html.TextBoxFor(a => a.Username, new { @class = "form-control", placeholder = "Username" })
+                                @Html.ValidationMessageFor(a => a.Username)
 
                             </div>
 
@@ -44,22 +53,30 @@
                                     <option value="Admin">Reporter</option>
                                     <option value="User">User</option>
                                 </select>
-
                                 @Html.ValidationMessageFor(a => a.Level)
 
                             </div>
+                            @if (!ViewData.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                        {
+                                            <li>@error.ErrorMessage</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
 
                             <hr>
 
                             <button class="btn btn-primary btn-user btn-block" type="submit">
                                 Confirm and Save
                             </button>
-                            <br>
-
+                            
+                            @Html.HiddenFor(a => a.Id)
                         </form>
                         <hr>
-
-
                     </div>
                 </div>
             </div>

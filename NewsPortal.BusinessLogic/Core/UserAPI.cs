@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using NewsPortal.BusinessLogic.DbModel;
+using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Domain.Enums;
 using NewsPortal.Helpers;
@@ -162,7 +163,8 @@ namespace NewsPortal.BusinessLogic.Core
                         Email = user.Email,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
-                        Id = userId
+                        Level = user.Level,
+                        Id = user.Id
                     };
                     return foundUser;
                 }
@@ -171,6 +173,46 @@ namespace NewsPortal.BusinessLogic.Core
                     return null;
                 }
             }
+        }
+
+        public ServiceResponse ReturnEditedProfile(UEditData existingUser)
+        {
+            var response = new ServiceResponse();
+            using (var db = new UserContext())
+            {
+                try
+                {
+                    var userToEdit = db.Users.Find(existingUser.Id);
+                    if (userToEdit != null)
+                    {
+                        userToEdit.Id = existingUser.Id;
+                        userToEdit.Username = existingUser.Username;
+                        userToEdit.Email = existingUser.Email;
+                        userToEdit.FirstName = existingUser.FirstName;
+                        userToEdit.LastName = existingUser.LastName;
+                        userToEdit.Level = existingUser.Level;
+
+                        db.SaveChanges();
+                        response.Status = true;
+                        response.PostId = userToEdit.Id;
+                        response.StatusMessage = "User Profile was edited successfully!";
+                    }
+                    else
+                    {
+                        response.PostId = 0;
+                        response.Status = false;
+                        response.StatusMessage = "User not found!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.PostId = 0;
+                    response.Status = false;
+                    response.StatusMessage = "An error occurred!";
+                }
+            }
+
+            return response;
         }
     }
 }

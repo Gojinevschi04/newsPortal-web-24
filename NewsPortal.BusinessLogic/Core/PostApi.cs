@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NewsPortal.BusinessLogic.DbModel;
@@ -89,6 +90,46 @@ namespace NewsPortal.BusinessLogic.Core
             }
 
             return list.ToList();
+        }
+
+        public ServiceResponse ReturnEditedPost(PEditData existingPost)
+        {
+            var response = new ServiceResponse();
+            using (var db = new PostContext())
+            {
+                try
+                {
+                    var postToEdit = db.Posts.Find(existingPost.Id);
+                    if (postToEdit != null)
+                    {
+                        postToEdit.Id = existingPost.Id;
+                        postToEdit.Title = existingPost.Title;
+                        postToEdit.Content = existingPost.Content;
+                        postToEdit.Category = existingPost.Category;
+                        postToEdit.Author = existingPost.Author;
+                        postToEdit.DateAdded = existingPost.DateAdded;
+
+                        db.SaveChanges();
+                        response.Status = true;
+                        response.PostId = postToEdit.Id;
+                        response.StatusMessage = "Your post was edited successfully!";
+                    }
+                    else
+                    {
+                        response.PostId = 0;
+                        response.Status = false;
+                        response.StatusMessage = "Post not found!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.PostId = 0;
+                    response.Status = false;
+                    response.StatusMessage = "An error occurred!";
+                }
+            }
+
+            return response;
         }
     }
 }
