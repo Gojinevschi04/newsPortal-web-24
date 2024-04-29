@@ -59,11 +59,11 @@
 
 
                             <td>
-                                <a href="@Url.Action("EditPost", "Admin", new { postId = post.Id })" class="btn btn-primary btn-user btn-block">Edit</a>
+                                <a href="@Url.Action("EditPost", "Admin", new { postId = post.Id })" class="btn btn-primary btn-user btn-primary">Edit</a>
                             </td>
                             <td>
                                 <form method="post" action="@Url.Action("DeletePost", "Admin", new { postId = post.Id })" onsubmit="return confirm('Are you sure you want to delete this post?');">
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Delete</button>
+                                    <button type="submit" class="btn btn-primary btn-user btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>
