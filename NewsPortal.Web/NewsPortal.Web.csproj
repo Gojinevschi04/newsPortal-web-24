@@ -1893,7 +1893,9 @@
     <Content Include="Views\Reporter\Posts.cshtml" />
     <Content Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Shared\_RegisterLayout.cshtml" />
-    <Content Include="Views\User\UserDetail.cshtml" />
+    <Content Include="Views\Dashboard\ChangePassword.cshtml" />
+    <Content Include="Views\Dashboard\EditProfile.cshtml" />
+    <Content Include="Views\Dashboard\UserDetail.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -1916,7 +1918,7 @@
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\ReporterController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Extension\HttpsContextExtension.cs" />
     <Compile Include="Extension\SessionExtensions.cs" />
     <Compile Include="Filters\AdminMod.cs" />

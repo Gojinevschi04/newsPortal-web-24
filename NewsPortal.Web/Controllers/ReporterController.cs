@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
-using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;

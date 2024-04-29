@@ -50,15 +50,20 @@ namespace NewsPortal.BusinessLogic
         {
             return UserCookie(apiCookieValue);
         }
-        
-        public UEditData GetUserById (int userId)
+
+        public UEditData GetUserById(int userId)
         {
             return ReturnUserById(userId);
         }
-        
+
         public ServiceResponse EditProfileAction(UEditData existingUser)
         {
             return ReturnEditedProfile(existingUser);
+        }
+
+        public ServiceResponse ChangePassword(UChangePasswordData password)
+        {
+            return ReturnChangedPassword(password);
         }
     }
 }

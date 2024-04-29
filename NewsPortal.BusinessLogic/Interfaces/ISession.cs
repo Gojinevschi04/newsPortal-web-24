@@ -18,6 +18,6 @@ namespace NewsPortal.BusinessLogic.Interfaces
         UserMinimal GetUserByCookie(string apiCookieValue);
         UEditData GetUserById(int userId);
         ServiceResponse EditProfileAction(UEditData existingUser);
-
+        ServiceResponse ChangePassword(UChangePasswordData password);
     }
 }

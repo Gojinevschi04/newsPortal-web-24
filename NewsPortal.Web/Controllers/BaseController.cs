@@ -51,5 +51,21 @@ namespace NewsPortal.Web.Controllers
                 System.Web.HttpContext.Current.Session["LoginStatus"] = "logout";
             }
         }
+        
+        public void Logout()
+        {
+            System.Web.HttpContext.Current.Session.Clear();
+
+            if (ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("X-KEY"))
+            {
+                var cookie = ControllerContext.HttpContext.Request.Cookies["X-KEY"];
+                if (cookie != null)
+                {
+                    cookie.Expires = DateTime.Now.AddDays(-1);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                }
+            }
+            System.Web.HttpContext.Current.Session["LoginStatus"] = "logout";
+        }
     }
 }

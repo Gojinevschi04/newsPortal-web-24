@@ -88,7 +88,7 @@ namespace NewsPortal.Web.Controllers
                 var response = _session.EditProfileAction(existingUser);
                 if (response.Status)
                 {
-                    return RedirectToAction("UserDetail", "User", new { PostID = response.PostId });
+                    return RedirectToAction("Users", "Admin", new { PostID = response.PostId });
                 }
                 else
                 {

@@ -60,6 +60,21 @@
         var authUser = TempData["AuthenticatedUser"] as NewsPortal.Domain.Entities.User.UserMinimal;
         if (authUser != null)
         {
+            <li class="nav-item active">
+                <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">
+                            <i class="fas fa-fw fa-table"></i>
+                            Profile Data:
+                        </h6>
+                        <a class="collapse-item" href="@Url.Action("UserDetail", "Dashboard")">Personal Info</a>
+                        <a class="collapse-item" href="@Url.Action("EditProfile", "Dashboard")">Edit Profile</a>
+                        <a class="collapse-item" href="@Url.Action("ChangePassword", "Dashboard")">Password Settings</a>
+                    </div>
+
+                </div>
+            </li>
+
             if (authUser.Level == URole.Admin || authUser.Level == URole.Reporter)
             {
                 <!-- Heading -->
