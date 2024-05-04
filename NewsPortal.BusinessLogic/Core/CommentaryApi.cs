@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NewsPortal.BusinessLogic.DbModel;
@@ -75,6 +76,46 @@ namespace NewsPortal.BusinessLogic.Core
             }
 
             return list.ToList();
+        }
+
+        public ServiceResponse ReturnEditedCommentary(CEditData existingCommentary)
+        {
+            var response = new ServiceResponse();
+            using (var db = new CommentaryContext())
+            {
+                try
+                {
+                    var commentaryToEdit = db.Comments.Find(existingCommentary.Id);
+                    if (commentaryToEdit != null)
+                    {
+                        commentaryToEdit.Id = existingCommentary.Id;
+                        commentaryToEdit.Content = existingCommentary.Content;
+                        commentaryToEdit.Author = existingCommentary.Author;
+                        commentaryToEdit.AuthorId = existingCommentary.AuthorId;
+                        commentaryToEdit.PostId = existingCommentary.PostId;
+                        commentaryToEdit.DateAdded = existingCommentary.DateAdded;
+
+                        db.SaveChanges();
+                        response.Status = true;
+                        response.PostId = commentaryToEdit.Id;
+                        response.StatusMessage = "Your commentary was edited successfully!";
+                    }
+                    else
+                    {
+                        response.PostId = 0;
+                        response.Status = false;
+                        response.StatusMessage = "Commentary not found!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    response.PostId = 0;
+                    response.Status = false;
+                    response.StatusMessage = "An error occurred!";
+                }
+            }
+
+            return response;
         }
     }
 }

@@ -21,19 +21,21 @@
             firstSentence = firstSentence.Substring(0, firstPeriodIndex + 1); // Extrage textul până la primul punct inclusiv
         }
 
+        <div class="container-xl px-4">
 
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h5 class="m-0 font-weight-bold text-primary">
-                    <a href="@Url.Action("Detail", "Post", new { PostId = item.Id })"> @item.Title </a>
-                </h5>
-            </div>
-            <div class="card-body">
-                @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
-                @if (item.Content.Length > 300 && firstPeriodIndex != -1)
-                {
-                    <span>...</span>
-                }
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h5 class="m-0 font-weight-bold text-primary">
+                        <a href="@Url.Action("Detail", "Post", new { PostId = item.Id })"> @item.Title </a>
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
+                    @if (item.Content.Length > 300 && firstPeriodIndex != -1)
+                    {
+                        <span>...</span>
+                    }
+                </div>
             </div>
         </div>
     }

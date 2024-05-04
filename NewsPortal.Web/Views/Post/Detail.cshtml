@@ -1,65 +1,69 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Post Detail";
-    @model NewsPortal.Web.Models.PostData
-
+    ViewBag.Title = @Model.Title;
 }
+@model NewsPortal.Web.Models.PostData
 
-<!-- Default Card Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h4 class="m-0 font-weight-bold text-primary"> @Model.Title</h4>
-    </div>
-    <div class="card-body">
-        @Model.Content
+<div class="container-xl px-4">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center">
+            <div class="ms-3">
+                <h4 class="m-0 font-weight-bold text-primary"> @Model.Title</h4>
+            </div>
+        </div>
+
+        <div class="card-body">
+            @Model.Content
+            <hr> @Model.DateAdded
+        </div>
+
     </div>
 </div>
 
 <!-- Collapsable Card Example -->
-<div class="card shadow mb-4">
-    <!-- Card Header - Accordion -->
-    <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-       role="button" aria-expanded="true" aria-controls="collapseCardExample">
-        <h6 class="m-0 font-weight-bold text-primary">Commentaries</h6>
-    </a>
-    <!-- Card Content - Collapse -->
-    <div class="collapse show" id="collapseCardExample">
-        @foreach (var commentary in Model.Commentaries)
-        {
-            <div class="card-body">
-                <strong>@commentary.Author</strong>
-                @commentary.Content
-            </div>
-        }
-    </div>
-</div>
+<div class="container-xl px-4">
 
-@using (Html.BeginForm("AddCommentary", "Commentary", FormMethod.Post))
-{
-    <div class="card o-hidden border-0 shadow-lg my-5">
-        <div class="card-body p-0">
-            <div class="col-lg-7 mx-auto">
-                <div class="p-5">
-
-                    <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Add a commentary!</h1>
-                    </div>
-
-                    <form class="title">
-                        <div class="form-group">
-                            <div class="form-group">
-                                <textarea class="form-control form-control-user" id="exampleContent" placeholder="Content" name="Content" rows="4"></textarea>
-                            </div>
-                        </div>
-                        <hr>
-                        <button class="btn btn-primary btn-user btn-block" type="submit">
-                            Add commentary
-                        </button>
-                        @Html.Hidden("PostId", Model.Id) <!-- Add a hidden input field for the post ID -->
-                    </form>
-                    <hr>
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="collapseCardExample">
+            <h5 class="m-0 font-weight-bold text-primary">Commentaries</h5>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse show" id="collapseCardExample">
+            @* //default trebuie fara show la class *@
+            @foreach (var commentary in Model.Commentaries)
+            {
+                <div class="card-body">
+                    <strong class="text-gray-800">@commentary.Author</strong>
+                    @commentary.DateAdded
+                    <br>
+                    <span class="text-gray-900">
+                        @commentary.Content
+                    </span>
                 </div>
-            </div>
+            }
+
+            @using (Html.BeginForm("AddCommentary", "Commentary", FormMethod.Post))
+            {
+                <div class="card-body p-0">
+                    <div class="col-lg-7" >
+                        <form class="title">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <textarea class="form-control form-control-text" id="exampleContent" placeholder="Add a comment" name="Content" rows="2" ></textarea>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-user btn-block" type="submit">
+                                Add commentary
+                            </button>
+                            @Html.Hidden("PostId", Model.Id) <!-- Add a hidden input field for the post ID -->
+                        </form>
+                    </div>
+                    <br>
+                </div>
+            }
         </div>
     </div>
-}
+
+</div>

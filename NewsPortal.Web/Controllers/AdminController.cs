@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
+using NewsPortal.Domain.Entities.Comment;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Web.Extension;
@@ -16,6 +17,8 @@ namespace NewsPortal.Web.Controllers
     {
         public readonly ISession _session;
         public readonly IPost _post;
+        public readonly ICommentary _commentary;
+
         private readonly UserMinimal adminAuthenticated;
 
         public AdminController()
@@ -23,6 +26,7 @@ namespace NewsPortal.Web.Controllers
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
             _post = bl.GetPostBL();
+            _commentary = bl.GetCommentaryBL();
             adminAuthenticated = System.Web.HttpContext.Current.GetMySessionObject();
         }
 
@@ -99,7 +103,7 @@ namespace NewsPortal.Web.Controllers
 
             return View();
         }
-        
+
         public ActionResult DeleteUser(int userId)
         {
             using (var db = new UserContext())
@@ -211,12 +215,92 @@ namespace NewsPortal.Web.Controllers
 
         public ActionResult Comments()
         {
+            var data = _commentary.GetAll();
+            List<CommentaryMinimal> allCommentaries = new List<CommentaryMinimal>();
+            foreach (var commentary in data)
+            {
+                var commentaryMinimal = new CommentaryMinimal();
+                commentaryMinimal.Id = commentary.Id;
+                commentaryMinimal.Content = commentary.Content;
+                commentaryMinimal.Author = commentary.Author;
+                commentaryMinimal.AuthorId = commentary.AuthorId;
+                commentaryMinimal.PostId = commentary.PostId;
+                commentaryMinimal.DateAdded = commentary.DateAdded;
+                allCommentaries.Add(commentaryMinimal);
+            }
+
+            return View(allCommentaries);
+        }
+
+        public ActionResult EditCommentary(int? commentaryId)
+        {
+            if (commentaryId == null) return View();
+            var commentaryData = _commentary.GetById((int)commentaryId);
+            if (commentaryData != null)
+            {
+                var commentaryModel = new CommentaryData()
+                {
+                    Id = commentaryData.Id,
+                    Content = commentaryData.Content,
+                    Author = commentaryData.Author,
+                    AuthorId = commentaryData.AuthorId,
+                    PostId = commentaryData.PostId,
+                    DateAdded = commentaryData.DateAdded
+                };
+                return View(commentaryModel);
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditCommentary(CommentaryData data)
+        {
+            //SessionStatus();
+            //var user = System.Web.HttpContext.Current.GetMySessionObject();
+
+            if (ModelState.IsValid)
+            {
+                CEditData existingCommentary = new CEditData()
+                {
+                    Id = data.Id,
+                    Content = data.Content,
+                    Author = data.Author,
+                    AuthorId = data.AuthorId,
+                    PostId = data.PostId,
+                    DateAdded = data.DateAdded
+                };
+                var response = _commentary.EditCommentaryAction(existingCommentary);
+                if (response.Status)
+                {
+                    return RedirectToAction("Comments", "Admin");
+                }
+                else
+                {
+                    ModelState.AddModelError("", response.StatusMessage);
+                }
+            }
+
             return View();
         }
 
-        public ActionResult DeleteComment(int postId)
+        public ActionResult DeleteCommentary(int commentaryId)
         {
-            return RedirectToAction("Comments", "Admin");
+            SessionStatus();
+            var user = System.Web.HttpContext.Current.GetMySessionObject();
+            var commentaryToDelete = _commentary.GetById(commentaryId);
+            if (commentaryToDelete == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                _commentary.Delete((int)commentaryId);
+                _commentary.Save();
+                return RedirectToAction("Comments", "Admin");
+            }
         }
     }
 }

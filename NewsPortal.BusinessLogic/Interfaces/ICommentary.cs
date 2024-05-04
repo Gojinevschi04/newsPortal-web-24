@@ -7,9 +7,11 @@ namespace NewsPortal.BusinessLogic.Interfaces
     public interface ICommentary
     {
         ServiceResponse AddCommentaryAction(NewCommentaryData data);
-
         IEnumerable<CommentaryMinimal> GetAllCommentsByPost(int postId);
-        // CDbTable GetById(int commentId);
-        // IEnumerable<CommentMinimal> GetAllByAuthor(string author);
+        IEnumerable<CDbTable> GetAll();
+        CDbTable GetById(int commentId);
+        ServiceResponse EditCommentaryAction(CEditData existingCommentary);
+        void Delete(int commentId);
+        void Save();
     }
 }

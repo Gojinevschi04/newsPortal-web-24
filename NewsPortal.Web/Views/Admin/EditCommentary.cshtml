@@ -1,0 +1,51 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit commentary";
+}
+
+@model NewsPortal.Web.Models.CommentaryData
+
+@using (Html.BeginForm("EditCommentary", "Admin", FormMethod.Post))
+{
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    <div class="p-5">
+
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Edit commentary</h1>
+                        </div>
+                        <br>
+
+                        <form class="title">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    @Html.LabelFor(a => a.Content)
+                                    @Html.TextBoxFor(a => a.Content, new { @class = "form-control", placeholder = "Content" })
+                                    @Html.ValidationMessageFor(a => a.Content)
+                                </div>
+
+                            </div>
+
+                            <hr>
+
+                            <button class="btn btn-primary btn-user btn-block" type="submit">
+                                Confirm and Save
+                            </button>
+
+                            @Html.HiddenFor(a => a.Id)
+                            @Html.HiddenFor(a => a.DateAdded)
+                            @Html.HiddenFor(a => a.Author)
+                            @Html.HiddenFor(a => a.AuthorId)
+                            @Html.HiddenFor(a => a.PostId)
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

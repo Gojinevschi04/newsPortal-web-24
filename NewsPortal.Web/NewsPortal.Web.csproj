@@ -1879,6 +1879,7 @@
     <Content Include="Scripts\sb-admin-2.js" />
     <Content Include="Scripts\sb-admin-2.min.js" />
     <Content Include="Views\Admin\Comments.cshtml" />
+    <Content Include="Views\Admin\EditCommentary.cshtml" />
     <Content Include="Views\Admin\EditPost.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\Posts.cshtml" />
