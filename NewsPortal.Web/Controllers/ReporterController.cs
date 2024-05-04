@@ -60,10 +60,8 @@ namespace NewsPortal.Web.Controllers
                 };
                 return View(postModel);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
@@ -86,11 +84,9 @@ namespace NewsPortal.Web.Controllers
                 {
                     return RedirectToAction("Detail", "Post", new { PostID = response.PostId });
                 }
-                else
-                {
-                    ModelState.AddModelError("", response.StatusMessage);
-                    return View(data);
-                }
+
+                ModelState.AddModelError("", response.StatusMessage);
+                return View(data);
             }
 
             return View();
@@ -104,12 +100,10 @@ namespace NewsPortal.Web.Controllers
             {
                 return HttpNotFound();
             }
-            else
-            {
-                _post.Delete((int)postId);
-                _post.Save();
-                return RedirectToAction("Posts", "Reporter");
-            }
+
+            _post.Delete((int)postId);
+            _post.Save();
+            return RedirectToAction("Posts", "Reporter");
         }
 
         public ActionResult Comments()

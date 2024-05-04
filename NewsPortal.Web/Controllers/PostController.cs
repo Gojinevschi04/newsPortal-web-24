@@ -61,10 +61,10 @@ namespace NewsPortal.Web.Controllers
                     return View(postData);
                 }
 
-                return View();
+                RedirectToAction("Error", "Home");
             }
 
-            return View();
+            return RedirectToAction("Error", "Home");
         }
 
 

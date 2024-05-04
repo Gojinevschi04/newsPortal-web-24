@@ -35,10 +35,8 @@ namespace NewsPortal.Web.Controllers
                 };
                 return View(userModel);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+
+            return RedirectToAction("Index", "Login");
         }
 
         public ActionResult EditProfile()
@@ -56,6 +54,7 @@ namespace NewsPortal.Web.Controllers
             }
 
             var userData = _session.GetUserById((int)userId);
+
             if (userData != null)
             {
                 var userModel = new UserData()
@@ -67,12 +66,11 @@ namespace NewsPortal.Web.Controllers
                     Email = userData.Email,
                     Level = userData.Level
                 };
+
                 return View(userModel);
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+
+            return RedirectToAction("Index", "Login");
         }
 
         [HttpPost]
@@ -98,11 +96,8 @@ namespace NewsPortal.Web.Controllers
                     {
                         return RedirectToAction("UserDetail", "Dashboard");
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", response.StatusMessage);
-                        return View(data);
-                    }
+                    ModelState.AddModelError("", response.StatusMessage);
+                    return View(data);
                 }
             }
 

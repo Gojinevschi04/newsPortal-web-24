@@ -70,9 +70,11 @@ namespace NewsPortal.Web.Controllers
                     TempData["posts"] = data;
                     return RedirectToAction("ListingParameters");
                 }
+
+                return RedirectToAction("Error", "Home");
             }
 
-            return RedirectToAction("ListingParameters");
+            return RedirectToAction("Error", "Home");
         }
 
         public ActionResult ListingParameters()
@@ -93,9 +95,7 @@ namespace NewsPortal.Web.Controllers
                 return View(model);
             }
 
-            if (model.ListingItems == null) return View(model);
-
-            return View(model);
+            return RedirectToAction("Error", "Home");
         }
     }
 }

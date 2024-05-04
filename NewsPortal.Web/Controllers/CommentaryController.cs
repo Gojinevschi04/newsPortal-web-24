@@ -53,7 +53,7 @@ namespace NewsPortal.Web.Controllers
                     return RedirectToAction("Detail", "Post", new { PostID = response.PostId });
                 }
 
-                return RedirectToAction("Index", "Listing");
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction("Index", "Login");
