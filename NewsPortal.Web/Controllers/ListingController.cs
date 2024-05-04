@@ -12,12 +12,14 @@ namespace NewsPortal.Web.Controllers
     {
         private readonly ISession _session;
         private readonly IPost _post;
+        private readonly ICommentary _commentary;
 
         public ListingController()
         {
             var bl = new BusinessLogic.BusinessLogic();
             _session = bl.GetSessionBL();
             _post = bl.GetPostBL();
+            _commentary = bl.GetCommentaryBL();
         }
 
         public ActionResult Index()
@@ -51,9 +53,10 @@ namespace NewsPortal.Web.Controllers
                 if (data.Count() > 0)
                 {
                     TempData["posts"] = data;
-                    return RedirectToAction("ListingParameters", new {key = key});
+                    return RedirectToAction("ListingParameters", new { key = key });
                 }
             }
+
             return RedirectToAction("Index", "Listing");
         }
 

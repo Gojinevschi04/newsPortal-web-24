@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Comment\CDbTable.cs" />
+    <Compile Include="Entities\Comment\CommentaryMinimal.cs" />
+    <Compile Include="Entities\Comment\NewCommentaryData.cs" />
     <Compile Include="Entities\Post\NewPostData.cs" />
     <Compile Include="Entities\Post\PDbTable.cs" />
     <Compile Include="Entities\Post\PEditData.cs" />

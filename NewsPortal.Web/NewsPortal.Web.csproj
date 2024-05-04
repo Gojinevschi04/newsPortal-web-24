@@ -1912,6 +1912,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentaryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ListingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -1928,6 +1929,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CommentaryData.cs" />
     <Compile Include="Models\ListingPageData.cs" />
     <Compile Include="Models\PostData.cs" />
     <Compile Include="Models\SideBarData.cs" />

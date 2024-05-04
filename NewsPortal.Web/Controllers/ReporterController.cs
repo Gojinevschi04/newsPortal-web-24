@@ -26,7 +26,7 @@ namespace NewsPortal.Web.Controllers
 
         public ActionResult Posts()
         {
-            var data = _post.GetAllByAuthor(reporterAuthenticated.Username);
+            var data = _post.GetAllByAuthor(reporterAuthenticated.Id);
             List<PostMinimal> allPosts = new List<PostMinimal>();
             foreach (var post in data)
             {
@@ -55,6 +55,7 @@ namespace NewsPortal.Web.Controllers
                     Content = postData.Content,
                     Category = postData.Category,
                     Author = postData.Author,
+                    AuthorId = postData.AuthorId,
                     DateAdded = postData.DateAdded
                 };
                 return View(postModel);
@@ -77,6 +78,7 @@ namespace NewsPortal.Web.Controllers
                     Content = data.Content,
                     Category = data.Category,
                     Author = data.Author,
+                    AuthorId = data.AuthorId,
                     DateAdded = data.DateAdded
                 };
                 var response = _post.EditPostAction(existingPost);

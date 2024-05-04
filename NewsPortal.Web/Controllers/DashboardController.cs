@@ -164,5 +164,11 @@ namespace NewsPortal.Web.Controllers
 
             return View();
         }
+
+        public ActionResult UserLogout()
+        {
+            Logout();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

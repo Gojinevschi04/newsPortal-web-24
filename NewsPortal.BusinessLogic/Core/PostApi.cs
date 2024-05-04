@@ -16,6 +16,7 @@ namespace NewsPortal.BusinessLogic.Core
                 Content = data.Content,
                 Category = data.Category,
                 DateAdded = data.DateAdded,
+                AuthorId = data.AuthorId,
                 Author = data.Author
             };
 
@@ -76,11 +77,6 @@ namespace NewsPortal.BusinessLogic.Core
                                                      || item.Content.Contains(key)
                 );
 
-                // var results = db.Posts.Where(item =>
-                //     item.Title.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0 ||
-                //     item.Content.IndexOf(key, StringComparison.OrdinalIgnoreCase) >= 0
-                // );
-
                 foreach (var item in results)
                 {
                     var postMinimal = new PostMinimal
@@ -98,12 +94,12 @@ namespace NewsPortal.BusinessLogic.Core
             return list.ToList();
         }
 
-        public IEnumerable<PostMinimal> ReturnPostsByAuthor(string author)
+        public IEnumerable<PostMinimal> ReturnPostsByAuthor(int authorId)
         {
             List<PostMinimal> list = new List<PostMinimal>();
             using (var db = new PostContext())
             {
-                var results = db.Posts.Where(a => a.Author == author);
+                var results = db.Posts.Where(a => a.AuthorId == authorId);
 
                 foreach (var item in results)
                 {
@@ -138,6 +134,7 @@ namespace NewsPortal.BusinessLogic.Core
                         postToEdit.Content = existingPost.Content;
                         postToEdit.Category = existingPost.Category;
                         postToEdit.Author = existingPost.Author;
+                        postToEdit.AuthorId = existingPost.AuthorId;
                         postToEdit.DateAdded = existingPost.DateAdded;
 
                         db.SaveChanges();

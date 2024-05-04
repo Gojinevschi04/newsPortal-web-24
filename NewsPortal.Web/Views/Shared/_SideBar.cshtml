@@ -86,28 +86,30 @@
                         </div>
                     </div>
                 </li>
+                <hr class="sidebar-divider my-0">
             }
 
             if (authUser.Level == URole.Reporter)
             {
                 <li class="nav-item active">
-
-                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                       aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-folder"></i>
+                        <span>Utilities</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">
-                                <i class="fas fa-fw fa-folder"></i>
-                                Pages:
-                            </h6>
+                            <h6 class="collapse-header">Pages:</h6>
                             <a class="collapse-item" href="@Url.Action("Index", "Post")">Add post</a>
                             <a class="collapse-item" href="@Url.Action("Posts", "Reporter")">View all posts</a>
                         </div>
                     </div>
                 </li>
+                <hr class="sidebar-divider my-0">
             }
         }
     }
-    <hr class="sidebar-divider my-0">
-
     <br>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

@@ -10,7 +10,6 @@ namespace NewsPortal.Web.Controllers
     {
         public ActionResult Index()
         {
-            
             return View();
         }
 

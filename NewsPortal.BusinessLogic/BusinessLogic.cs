@@ -14,5 +14,10 @@ namespace NewsPortal.BusinessLogic
           {
                return new PostBL();
           }
+          
+          public ICommentary GetCommentaryBL()
+          {
+               return new CommentaryBL();
+          }
      }
 }
