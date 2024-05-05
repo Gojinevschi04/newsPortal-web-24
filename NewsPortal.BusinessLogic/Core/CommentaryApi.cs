@@ -53,6 +53,8 @@ namespace NewsPortal.BusinessLogic.Core
             {
                 var results = commentaryDb.Comments.Where(a => a.PostId == postId);
                 UDbTable author;
+                string authorUsername;
+                int authorId;
 
                 foreach (var item in results)
                 {
@@ -61,12 +63,23 @@ namespace NewsPortal.BusinessLogic.Core
                         author = userDb.Users.FirstOrDefault(u => u.Id == item.AuthorId);
                     }
 
+                    if (author == null)
+                    {
+                        authorUsername = "Deleted user";
+                        authorId = 0;
+                    }
+                    else
+                    {
+                        authorUsername = author.Username;
+                        authorId = author.Id;
+                    }
+
                     var commentaryMinimal = new CommentaryMinimal()
                     {
                         Id = item.Id,
                         Content = item.Content,
-                        Author = author.Username,
-                        AuthorId = item.AuthorId,
+                        Author = authorUsername,
+                        AuthorId = authorId,
                         PostId = item.AuthorId,
                         DateAdded = item.DateAdded,
                     };
@@ -77,6 +90,53 @@ namespace NewsPortal.BusinessLogic.Core
 
             return list.ToList();
         }
+
+        public IEnumerable<CommentaryMinimal> ReturnAllCommentaries()
+        {
+            List<CommentaryMinimal> list = new List<CommentaryMinimal>();
+
+            using (var commentaryDb = new CommentaryContext())
+            {
+                var results = commentaryDb.Comments;
+                UDbTable author;
+                string authorUsername;
+                int authorId;
+
+                foreach (var item in results)
+                {
+                    using (var userDb = new UserContext())
+                    {
+                        author = userDb.Users.FirstOrDefault(u => u.Id == item.AuthorId);
+                    }
+
+                    if (author == null)
+                    {
+                        authorUsername = "Deleted user";
+                        authorId = 0;
+                    }
+                    else
+                    {
+                        authorUsername = author.Username;
+                        authorId = author.Id;
+                    }
+
+                    var commentaryMinimal = new CommentaryMinimal()
+                    {
+                        Id = item.Id,
+                        Content = item.Content,
+                        Author = authorUsername,
+                        AuthorId = authorId,
+                        PostId = item.AuthorId,
+                        DateAdded = item.DateAdded,
+                    };
+
+                    list.Add(commentaryMinimal);
+                }
+            }
+
+            return list.ToList();
+        }
+
 
         public ServiceResponse ReturnEditedCommentary(CEditData existingCommentary)
         {

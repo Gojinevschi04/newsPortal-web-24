@@ -32,37 +32,40 @@
                     </thead>
 
                     <tbody>
-                    @foreach (var comment in Model)
+                    @if (Model != null)
                     {
-                        string firstSentence = comment.Content.Substring(0, Math.Min(comment.Content.Length, 100)); // Extrage primele 100 de caractere
-                        int firstPeriodIndex = firstSentence.IndexOf('.'); // Găsește poziția primului punct
-                        if (firstPeriodIndex != -1) // Verifică dacă s-a găsit un punct
+                        foreach (var comment in Model)
                         {
-                            firstSentence = firstSentence.Substring(0, firstPeriodIndex + 1); // Extrage textul până la primul punct inclusiv
+                            string firstSentence = comment.Content.Substring(0, Math.Min(comment.Content.Length, 100)); // Extrage primele 100 de caractere
+                            int firstPeriodIndex = firstSentence.IndexOf('.'); // Găsește poziția primului punct
+                            if (firstPeriodIndex != -1) // Verifică dacă s-a găsit un punct
+                            {
+                                firstSentence = firstSentence.Substring(0, firstPeriodIndex + 1); // Extrage textul până la primul punct inclusiv
+                            }
+
+                            <tr>
+
+                                <td>@comment.Id</td>
+                                <td>
+                                    @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
+                                    @if (comment.Content.Length > 100 && firstPeriodIndex != -1)
+                                    {
+                                        <span>...</span>
+                                    }
+                                </td>
+                                <td>@comment.Author</td>
+                                <td>@comment.PostId</td>
+                                <td>@comment.DateAdded</td>
+                                <td>
+                                    <a href="@Url.Action("EditCommentary", "Admin", new { commentaryId = comment.Id })" class="btn btn-primary btn-user btn-block">Edit</a>
+                                </td>
+                                <td>
+                                    <form method="post" action="@Url.Action("DeleteCommentary", "Admin", new { commentaryId = comment.Id })" onsubmit="return confirm('Are you sure you want to delete this commentary?');">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
                         }
-
-                        <tr>
-
-                            <td>@comment.Id</td>
-                            <td>
-                                @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
-                                @if (comment.Content.Length > 100 && firstPeriodIndex != -1)
-                                {
-                                    <span>...</span>
-                                }
-                            </td>
-                            <td>@comment.Author</td>
-                            <td>@comment.PostId</td>
-                            <td>@comment.DateAdded</td>
-                            <td>
-                                <a href="@Url.Action("EditCommentary", "Admin", new { commentaryId = comment.Id })" class="btn btn-primary btn-user btn-block">Edit</a>
-                            </td>
-                            <td>
-                                <form method="post" action="@Url.Action("DeleteCommentary", "Admin", new { commentaryId = comment.Id })" onsubmit="return confirm('Are you sure you want to delete this commentary?');">
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
                     }
 
                     </tbody>

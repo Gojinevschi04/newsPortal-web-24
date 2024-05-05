@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
@@ -34,19 +35,25 @@ namespace NewsPortal.Web.Controllers
         {
             var users = _session.GetAll();
             List<UserData> allUsers = new List<UserData>();
-            foreach (var user in users)
+
+            if (users.Any())
             {
-                var userData = new UserData();
-                userData.Id = user.Id;
-                userData.FirstName = user.FirstName;
-                userData.LastName = user.LastName;
-                userData.Email = user.Email;
-                userData.Username = user.Username;
-                userData.Level = user.Level;
-                allUsers.Add(userData);
+                foreach (var user in users)
+                {
+                    var userData = new UserData();
+                    userData.Id = user.Id;
+                    userData.FirstName = user.FirstName;
+                    userData.LastName = user.LastName;
+                    userData.Email = user.Email;
+                    userData.Username = user.Username;
+                    userData.Level = user.Level;
+                    allUsers.Add(userData);
+                }
+
+                return View(allUsers);
             }
 
-            return View(allUsers);
+            return RedirectToAction("Error", "Home");
         }
 
         public ActionResult EditUser(int? userId)
@@ -120,20 +127,26 @@ namespace NewsPortal.Web.Controllers
         {
             var data = _post.GetAll();
             List<PostMinimal> allPosts = new List<PostMinimal>();
-            foreach (var post in data)
+
+            if (data.Any())
             {
-                var postMinimal = new PostMinimal();
-                postMinimal.Id = post.Id;
-                postMinimal.Title = post.Title;
-                postMinimal.Content = post.Content;
-                postMinimal.Category = post.Category;
-                postMinimal.Author = post.Author;
-                postMinimal.AuthorId = post.AuthorId;
-                postMinimal.DateAdded = post.DateAdded;
-                allPosts.Add(postMinimal);
+                foreach (var post in data)
+                {
+                    var postMinimal = new PostMinimal();
+                    postMinimal.Id = post.Id;
+                    postMinimal.Title = post.Title;
+                    postMinimal.Content = post.Content;
+                    postMinimal.Category = post.Category;
+                    postMinimal.Author = post.Author;
+                    postMinimal.AuthorId = post.AuthorId;
+                    postMinimal.DateAdded = post.DateAdded;
+                    allPosts.Add(postMinimal);
+                }
+
+                return View(allPosts);
             }
 
-            return View(allPosts);
+            return RedirectToAction("Error", "Home");
         }
 
         public ActionResult EditPost(int? postId)
@@ -207,19 +220,25 @@ namespace NewsPortal.Web.Controllers
         {
             var data = _commentary.GetAll();
             List<CommentaryMinimal> allCommentaries = new List<CommentaryMinimal>();
-            foreach (var commentary in data)
+
+            if (data.Any())
             {
-                var commentaryMinimal = new CommentaryMinimal();
-                commentaryMinimal.Id = commentary.Id;
-                commentaryMinimal.Content = commentary.Content;
-                commentaryMinimal.Author = commentary.Author;
-                commentaryMinimal.AuthorId = commentary.AuthorId;
-                commentaryMinimal.PostId = commentary.PostId;
-                commentaryMinimal.DateAdded = commentary.DateAdded;
-                allCommentaries.Add(commentaryMinimal);
+                foreach (var commentary in data)
+                {
+                    var commentaryMinimal = new CommentaryMinimal();
+                    commentaryMinimal.Id = commentary.Id;
+                    commentaryMinimal.Content = commentary.Content;
+                    commentaryMinimal.Author = commentary.Author;
+                    commentaryMinimal.AuthorId = commentary.AuthorId;
+                    commentaryMinimal.PostId = commentary.PostId;
+                    commentaryMinimal.DateAdded = commentary.DateAdded;
+                    allCommentaries.Add(commentaryMinimal);
+                }
+
+                return View(allCommentaries);
             }
 
-            return View(allCommentaries);
+            return RedirectToAction("Error", "Home");
         }
 
         public ActionResult EditCommentary(int? commentaryId)

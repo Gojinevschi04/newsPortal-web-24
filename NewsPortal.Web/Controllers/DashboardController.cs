@@ -96,6 +96,7 @@ namespace NewsPortal.Web.Controllers
                     {
                         return RedirectToAction("UserDetail", "Dashboard");
                     }
+
                     ModelState.AddModelError("", response.StatusMessage);
                     return View(data);
                 }
@@ -104,6 +105,7 @@ namespace NewsPortal.Web.Controllers
             return View();
         }
 
+        // [ValidateAntiForgeryToken]
         public ActionResult ChangePassword()
         {
             var model = new UChangePasswordData()
@@ -114,7 +116,7 @@ namespace NewsPortal.Web.Controllers
         }
 
         [HttpGet]
-        //[ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(int? userId)
         {
             if (userId == null)
@@ -135,7 +137,7 @@ namespace NewsPortal.Web.Controllers
 
         [AuthorizedMod]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public ActionResult ChangePassword(UChangePasswordData password)
         {
             var model = new UChangePasswordData();

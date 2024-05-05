@@ -8,7 +8,7 @@ namespace NewsPortal.BusinessLogic.Interfaces
     {
         ServiceResponse AddCommentaryAction(NewCommentaryData data);
         IEnumerable<CommentaryMinimal> GetAllCommentsByPost(int postId);
-        IEnumerable<CDbTable> GetAll();
+        IEnumerable<CommentaryMinimal> GetAll();
         CDbTable GetById(int commentId);
         ServiceResponse EditCommentaryAction(CEditData existingCommentary);
         void Delete(int commentId);

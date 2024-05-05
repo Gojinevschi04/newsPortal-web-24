@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
@@ -28,18 +29,24 @@ namespace NewsPortal.Web.Controllers
         {
             var data = _post.GetAllByAuthor(reporterAuthenticated.Id);
             List<PostMinimal> allPosts = new List<PostMinimal>();
-            foreach (var post in data)
+
+            if (data.Any())
             {
-                var postMinimal = new PostMinimal();
-                postMinimal.Id = post.Id;
-                postMinimal.Title = post.Title;
-                postMinimal.Content = post.Content;
-                postMinimal.Category = post.Category;
-                postMinimal.DateAdded = post.DateAdded;
-                allPosts.Add(postMinimal);
+                foreach (var post in data)
+                {
+                    var postMinimal = new PostMinimal();
+                    postMinimal.Id = post.Id;
+                    postMinimal.Title = post.Title;
+                    postMinimal.Content = post.Content;
+                    postMinimal.Category = post.Category;
+                    postMinimal.DateAdded = post.DateAdded;
+                    allPosts.Add(postMinimal);
+                }
+
+                return View(allPosts);
             }
 
-            return View(allPosts);
+            return RedirectToAction("Error", "Home");
         }
 
         public ActionResult EditPost(int? postId)

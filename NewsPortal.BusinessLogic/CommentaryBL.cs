@@ -22,9 +22,9 @@ namespace NewsPortal.BusinessLogic
             _context = context;
         }
 
-        public IEnumerable<CDbTable> GetAll()
+        public IEnumerable<CommentaryMinimal> GetAll()
         {
-            return _context.Comments.ToList();
+            return ReturnAllCommentaries();
         }
 
         public ServiceResponse AddCommentaryAction(NewCommentaryData data)
