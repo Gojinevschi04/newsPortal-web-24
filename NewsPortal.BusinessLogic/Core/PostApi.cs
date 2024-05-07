@@ -16,6 +16,7 @@ namespace NewsPortal.BusinessLogic.Core
                 Content = data.Content,
                 Category = data.Category,
                 DateAdded = data.DateAdded,
+                ImagePath = data.ImagePath,
                 AuthorId = data.AuthorId,
                 Author = data.Author
             };
@@ -58,6 +59,7 @@ namespace NewsPortal.BusinessLogic.Core
                         Id = item.Id,
                         Title = item.Title,
                         Content = item.Content,
+                        ImagePath = item.ImagePath,
                         Category = item.Category
                     };
 
@@ -84,6 +86,7 @@ namespace NewsPortal.BusinessLogic.Core
                         Id = item.Id,
                         Title = item.Title,
                         Content = item.Content,
+                        ImagePath = item.ImagePath,
                         Category = item.Category
                     };
 
@@ -109,6 +112,7 @@ namespace NewsPortal.BusinessLogic.Core
                         Title = item.Title,
                         Content = item.Content,
                         Category = item.Category,
+                        ImagePath = item.ImagePath,
                         DateAdded = item.DateAdded
                     };
 
@@ -133,6 +137,7 @@ namespace NewsPortal.BusinessLogic.Core
                         postToEdit.Title = existingPost.Title;
                         postToEdit.Content = existingPost.Content;
                         postToEdit.Category = existingPost.Category;
+                        postToEdit.ImagePath = existingPost.ImagePath;
                         postToEdit.Author = existingPost.Author;
                         postToEdit.AuthorId = existingPost.AuthorId;
                         postToEdit.DateAdded = existingPost.DateAdded;

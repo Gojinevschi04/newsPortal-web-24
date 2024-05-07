@@ -39,6 +39,7 @@ namespace NewsPortal.Web.Controllers
             {
                 Id = post.Id,
                 Title = post.Title,
+                ImagePath = post.ImagePath,
                 Content = post.Content,
             }).ToList();
 

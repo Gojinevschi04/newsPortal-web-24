@@ -45,7 +45,12 @@
                                     @Html.LabelFor(a => a.Content)
                                     @Html.TextBoxFor(a => a.Content, new { @class = "form-control", placeholder = "Content" })
                                     @Html.ValidationMessageFor(a => a.Content)
+                                </div>
 
+                                <div class="form-group">
+                                    <label class="uploadBox">
+                                        <input type="file" name="ImageFile" id="ImageFile">
+                                    </label>
                                 </div>
                             </div>
 

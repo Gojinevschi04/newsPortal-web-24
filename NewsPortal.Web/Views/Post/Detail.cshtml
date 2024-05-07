@@ -12,6 +12,20 @@
             </div>
         </div>
 
+        @if (Model.ImagePath != null)
+        {
+            <div class="container" style="width: 700px;" align="center">
+                <img src="@Url.Content(Model.ImagePath)" style="width: 100%; height: auto;" alt="Ad Name"/>
+            </div>
+        }
+        else
+        {
+            <div class="container" style="width: 200px;">
+                <img src="~/Content/img/undraw_rocket.svg" style="width: 100%; height: auto;"
+                     alt=""/>
+            </div>
+        }
+
         <div class="card-body">
             @Model.Content
             <hr> @Model.DateAdded
@@ -51,7 +65,7 @@
                         <form class="title">
                             <div class="form-group">
                                 <div class="form-group">
-                                    <textarea class="form-control form-control-text" id="exampleContent" placeholder="Add a comment" name="Content" rows="2" ></textarea>
+                                    <textarea class="form-control form-control-text" id="exampleContent" placeholder="Add a comment" name="Content" rows="2" required="" ></textarea>
                                 </div>
                             </div>
                             <button class="btn btn-primary btn-user btn-block" type="submit">

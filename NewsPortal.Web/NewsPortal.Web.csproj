@@ -1980,6 +1980,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\PostsImages\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NewsPortal.BusinessLogic\NewsPortal.BusinessLogic.csproj">

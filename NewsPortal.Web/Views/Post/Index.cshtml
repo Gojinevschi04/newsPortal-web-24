@@ -5,7 +5,7 @@
 
 @model NewsPortal.Web.Models.PostData
 
-@using (Html.BeginForm("Index", "Post", FormMethod.Post))
+@using (Html.BeginForm("Index", "Post", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
@@ -23,7 +23,7 @@
                                 <input type="text" class="form-control form-control-user" id="exampleTitle"
                                        placeholder="Title" name="Title">
                                 <br>
-                                
+
                                 <select class="form-control" name="Category" required>
                                     <option value="" disabled selected>Select a category</option>
                                     <option value="Politics">Politics</option>
@@ -39,6 +39,12 @@
 
                                 <div class="form-group">
                                     <textarea class="form-control form-control-user" id="exampleContent" placeholder="Content" name="Content" rows="4"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="uploadBox">
+                                        <input type="file" name="ImageFile" id="ImageFile">
+                                    </label>
                                 </div>
                             </div>
 

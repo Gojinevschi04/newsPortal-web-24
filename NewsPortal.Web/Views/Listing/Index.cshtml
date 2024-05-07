@@ -13,7 +13,7 @@
 {
     foreach (var item in Model.ListingItems)
     {
-        string firstSentence = item.Content.Substring(0, Math.Min(item.Content.Length, 300)); // Extrage primele 100 de caractere
+        string firstSentence = item.Content.Substring(0, Math.Min(item.Content.Length, 200)); // Extrage primele 100 de caractere
         int firstPeriodIndex = firstSentence.IndexOf('.'); // Găsește poziția primului punct
         if (firstPeriodIndex != -1) // Verifică dacă s-a găsit un punct
         {
@@ -22,18 +22,38 @@
 
         <div class="container-xl px-4">
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h5 class="m-0 font-weight-bold text-primary">
-                        <a href="@Url.Action("Detail", "Post", new { PostId = item.Id })"> @item.Title </a>
-                    </h5>
-                </div>
-                <div class="card-body">
-                    @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
-                    @if (item.Content.Length > 300 && firstPeriodIndex != -1)
-                    {
-                        <span>...</span>
-                        <!-- Adauga trei puncte de suspensie pentru a indica că textul a fost trunchiat -->
-                    }
+                <div class="row g-5">
+                    @* <div class="m-3"> *@
+                    @* </div> *@
+
+                    <div class=" card-img col-md-2 d-flex align-items-center justify-content-center">
+                        @if (item.ImagePath != null)
+                        {
+                            <img src="@Url.Content(item.ImagePath)" class="img-fluid w-100" style="max-width: 200px; max-height: 100px; object-fit: cover;" alt="Ad Name">
+                        }
+                        else
+                        {
+                            <img src="~/Content/img/undraw_rocket.svg" class="img-fluid w-100" style="max-width: 200px; max-height: 100px; object-fit: cover;" alt="Ad Name">
+                        }
+                    </div>
+
+
+                    <div class="col-md-10 m-0">
+                        <div class="card-header py-3">
+                            <h5 class="m-0 font-weight-bold text-primary">
+                                <a href="@Url.Action("Detail", "Post", new { PostId = item.Id })"> @item.Title </a>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text mb-1">
+                                @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
+                                @if (item.Content.Length > 300 && firstPeriodIndex != -1)
+                                {
+                                    <span>...</span>
+                                }
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

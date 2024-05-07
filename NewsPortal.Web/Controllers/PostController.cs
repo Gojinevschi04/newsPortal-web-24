@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
 using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
@@ -41,11 +42,22 @@ namespace NewsPortal.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if (postData.ImageFile != null && postData.ImageFile.ContentLength > 0)
+                    {
+                        string fileName = Path.GetFileNameWithoutExtension(postData.ImageFile.FileName);
+                        string extension = Path.GetExtension(postData.ImageFile.FileName);
+                        fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                        postData.ImagePath = "~/Content/PostsImages/" + fileName;
+                        fileName = Path.Combine(Server.MapPath("~/Content/PostsImages/"), fileName);
+                        postData.ImageFile.SaveAs(fileName);
+                    }
+
                     NewPostData data = new NewPostData()
                     {
                         Title = postData.Title,
                         Content = postData.Content,
                         Category = postData.Category,
+                        ImagePath = postData.ImagePath,
                         DateAdded = DateTime.Now,
                         Author = user.Username,
                         AuthorId = user.Id
@@ -83,6 +95,7 @@ namespace NewsPortal.Web.Controllers
                     Content = commentary.Content,
                     Author = commentary.Author,
                     AuthorId = commentary.AuthorId,
+                    PostId = commentary.AuthorId,
                     DateAdded = commentary.DateAdded,
                 };
 
@@ -96,6 +109,7 @@ namespace NewsPortal.Web.Controllers
                     Id = data.Id,
                     Title = data.Title,
                     Content = data.Content,
+                    ImagePath = data.ImagePath,
                     DateAdded = data.DateAdded,
                     Commentaries = commentaryList
                 };
