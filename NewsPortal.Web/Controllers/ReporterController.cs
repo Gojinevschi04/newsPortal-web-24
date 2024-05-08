@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Mvc;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
@@ -39,6 +42,7 @@ namespace NewsPortal.Web.Controllers
                     postMinimal.Title = post.Title;
                     postMinimal.Content = post.Content;
                     postMinimal.Category = post.Category;
+                    postMinimal.ImagePath = post.ImagePath;
                     postMinimal.DateAdded = post.DateAdded;
                     allPosts.Add(postMinimal);
                 }
@@ -55,13 +59,14 @@ namespace NewsPortal.Web.Controllers
             var postData = _post.GetById((int)postId);
             if (postData != null)
             {
-                var postModel = new PostData()
+                var postModel = new PostEditData()
                 {
                     Id = postData.Id,
                     Title = postData.Title,
                     Content = postData.Content,
                     Category = postData.Category,
                     Author = postData.Author,
+                    ImagePath = postData.ImagePath,
                     AuthorId = postData.AuthorId,
                     DateAdded = postData.DateAdded
                 };
@@ -72,16 +77,39 @@ namespace NewsPortal.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditPost(PostData data)
+        public ActionResult EditPost(PostEditData data)
         {
             if (ModelState.IsValid)
             {
+                string completeFileName = null;
+                string fileName = null;
+                
+                if (data.ImageFile != null && data.ImageFile.ContentLength > 0)
+                {
+                    fileName = Path.GetFileNameWithoutExtension(data.ImageFile.FileName);
+                    string extension = Path.GetExtension(data.ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    completeFileName = "~/Content/PostsImages/" + fileName;
+                }
+                
+                if (completeFileName != data.ImagePath)
+                {
+                    data.NewImagePath = completeFileName;
+                    fileName = Path.Combine(Server.MapPath("~/Content/PostsImages/"), fileName);
+                    data.ImageFile.SaveAs(fileName);
+                }
+                else
+                {
+                    data.NewImagePath = data.ImagePath;
+                }
+
                 PEditData existingPost = new PEditData()
                 {
                     Id = data.Id,
                     Title = data.Title,
                     Content = data.Content,
                     Category = data.Category,
+                    ImagePath = data.NewImagePath,
                     Author = data.Author,
                     AuthorId = data.AuthorId,
                     DateAdded = data.DateAdded

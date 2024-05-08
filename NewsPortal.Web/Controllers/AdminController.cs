@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using NewsPortal.BusinessLogic.DbModel;
@@ -162,6 +164,7 @@ namespace NewsPortal.Web.Controllers
                     Content = postData.Content,
                     Category = postData.Category,
                     Author = postData.Author,
+                    ImagePath = postData.ImagePath,
                     AuthorId = postData.AuthorId,
                     DateAdded = postData.DateAdded
                 };
@@ -179,12 +182,23 @@ namespace NewsPortal.Web.Controllers
 
             if (ModelState.IsValid)
             {
+                if (data.ImageFile != null && data.ImageFile.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(data.ImageFile.FileName);
+                    string extension = Path.GetExtension(data.ImageFile.FileName);
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    data.ImagePath = "~/Content/PostsImages/" + fileName;
+                    fileName = Path.Combine(Server.MapPath("~/Content/PostsImages/"), fileName);
+                    data.ImageFile.SaveAs(fileName);
+                }
+                
                 PEditData existingPost = new PEditData()
                 {
                     Id = data.Id,
                     Title = data.Title,
                     Content = data.Content,
                     Category = data.Category,
+                    ImagePath = data.ImagePath,
                     Author = data.Author,
                     DateAdded = data.DateAdded
                 };

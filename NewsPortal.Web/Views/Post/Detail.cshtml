@@ -8,25 +8,23 @@
     <div class="card mb-4">
         <div class="card-header d-flex align-items-center">
             <div class="ms-3">
-                <h4 class="m-0 font-weight-bold text-primary"> @Model.Title</h4>
+                <h4 class="m-0 font-weight-bold text-primary text-justify"> @Model.Title</h4>
             </div>
         </div>
 
-        @if (Model.ImagePath != null)
-        {
-            <div class="container" style="width: 700px;" align="center">
-                <img src="@Url.Content(Model.ImagePath)" style="width: 100%; height: auto;" alt="Ad Name"/>
-            </div>
-        }
-        else
-        {
-            <div class="container" style="width: 200px;">
-                <img src="~/Content/img/undraw_rocket.svg" style="width: 100%; height: auto;"
-                     alt=""/>
-            </div>
-        }
+        <div class="text-center" style="width:100%; ">
+            @if (Model.ImagePath != null)
+            {
+                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width:80%; max-height: 900px" src="@Url.Content(Model.ImagePath)" alt="...">
+            }
+            else
+            {
+                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 500px;height: 600px" src="~/Content/img/undraw_rocket.svg" alt="...">
+            }
 
-        <div class="card-body">
+        </div>
+
+        <div class="card-body text-justify">
             @Model.Content
             <hr> @Model.DateAdded
         </div>

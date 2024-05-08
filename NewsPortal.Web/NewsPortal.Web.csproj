@@ -1933,6 +1933,7 @@
     <Compile Include="Models\CommentaryData.cs" />
     <Compile Include="Models\ListingPageData.cs" />
     <Compile Include="Models\PostData.cs" />
+    <Compile Include="Models\PostEditData.cs" />
     <Compile Include="Models\SideBarData.cs" />
     <Compile Include="Models\UDataRegister.cs" />
     <Compile Include="Models\UserData.cs" />
