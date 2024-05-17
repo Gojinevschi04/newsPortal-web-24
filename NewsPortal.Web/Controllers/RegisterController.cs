@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using NewsPortal.BusinessLogic;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Web.Models;
 
-namespace NewsPortal.Controllers
+namespace NewsPortal.Web.Controllers
 {
-     public class RegisterController : Controller
+     public class RegisterController : BaseController
      {
-          private readonly ISession _sesion;
+          private readonly ISession _session;
 
           public RegisterController()
           {
                var bl = new BusinessLogic.BusinessLogic();
-               _sesion = bl.GetSessionBL();
-
+               _session = bl.GetSessionBL();
           }
 
           // GET: Register
@@ -39,11 +37,18 @@ namespace NewsPortal.Controllers
                     Username = login.Username,
                     Email = login.Email,
                     LoginDataTime = DateTime.Now,
-                    Ip = "0.0.0.0"
+                    Ip = Request.UserHostAddress
                };
 
-               ULoginResp resp = _sesion.URegisterAction(URData);
+               ULoginResp resp = _session.URegisterAction(URData);
 
+               if (resp.Status == true)
+               {
+                    HttpCookie cookie = _session.GenCookie(login.Email);
+                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+
+                    return RedirectToAction("Index", "Login");
+               }
 
                return Redirect("/Home/Index");
           }

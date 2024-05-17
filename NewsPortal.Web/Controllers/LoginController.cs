@@ -11,7 +11,7 @@ using NewsPortal.Web.Models;
 
 namespace NewsPortal.Web.Controllers
 {
-     public class LoginController : Controller
+     public class LoginController : BaseController
      {
           private readonly ISession _session;
 
@@ -35,7 +35,7 @@ namespace NewsPortal.Web.Controllers
                     ULoginData data = new ULoginData
                     {
                          Email = login.Email,
-                         // Username = login.Username,
+                         //Username = login.Username,
                          Password = login.Password,
                          LoginIp = Request.UserHostAddress,
                          LoginDateTime = DateTime.Now
@@ -44,7 +44,8 @@ namespace NewsPortal.Web.Controllers
                     var userLogin = _session.UserLogin(data);
                     if (userLogin.Status)
                     {
-
+                         HttpCookie cookie = _session.GenCookie(login.Email);
+                         ControllerContext.HttpContext.Response.Cookies.Add(cookie);
                          return RedirectToAction("Index", "Home");
                     }
                     else
