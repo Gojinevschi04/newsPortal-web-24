@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.Domain.Entities.Post;
 
