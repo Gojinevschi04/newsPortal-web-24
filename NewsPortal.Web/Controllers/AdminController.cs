@@ -59,5 +59,44 @@ namespace NewsPortal.Web.Controllers
 
                return View(allPosts);
           }
+          public ActionResult EditPost(int? postId)
+          {
+               if (postId == null) return View();
+               var postData = _post.GetById((int)postId);
+               if (postData != null)
+               {
+                    var postModel = new PostData()
+                    {
+                         Id = postData.Id,
+                         Title = postData.Title,
+                         Content = postData.Content,
+                         Category = postData.Category,
+                         Author = postData.Author,
+                         DateAdded = postData.DateAdded
+                    };
+                    return View(postModel);
+               }
+               else
+               {
+                    return RedirectToAction("Index", "Login");
+               }
+          }
+
+          public ActionResult DeletePost(int? postId)
+          {
+               SessionStatus();
+               var user = System.Web.HttpContext.Current.GetMySessionObject();
+               var postToDelete = _post.GetById((int)postId);
+               if (postToDelete == null && user.Username == postToDelete.Author)
+               {
+                    return HttpNotFound();
+               }
+               else
+               {
+                    _post.Delete((int)postId);
+                    _post.Save();
+                    return RedirectToAction("Posts", "Admin");
+               }
+          }
      }
 }

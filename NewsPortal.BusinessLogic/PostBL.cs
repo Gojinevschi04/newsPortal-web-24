@@ -43,5 +43,17 @@ namespace NewsPortal.BusinessLogic
           {
                return ReturnPostsByCategory(category);
           }
+          public void Delete(int PostID)
+          {
+               PDbTable model = _context.Posts.Find(PostID);
+               if (model != null)
+               {
+                    _context.Posts.Remove(model);
+               }
+          }
+          public void Save()
+          {
+               _context.SaveChanges();
+          }
      }
 }

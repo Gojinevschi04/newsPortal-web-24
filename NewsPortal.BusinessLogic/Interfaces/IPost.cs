@@ -11,5 +11,7 @@ namespace NewsPortal.BusinessLogic.Interfaces
           IEnumerable<PDbTable> GetAll();
           IEnumerable<PostMinimal> GetAllByAuthor(int authorId);
           IEnumerable<PostMinimal> GetPostsByCategory(string category);
+          void Delete(int postId);
+          void Save();
      }
 }

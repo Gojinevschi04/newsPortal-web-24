@@ -146,5 +146,6 @@ namespace NewsPortal.BusinessLogic.Core
 
                return userMinimal;
           }
+
      }
 }
