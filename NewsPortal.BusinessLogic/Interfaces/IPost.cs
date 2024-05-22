@@ -9,5 +9,7 @@ namespace NewsPortal.BusinessLogic.Interfaces
           ServiceResponse AddPostAction(NewPostData data);
           PDbTable GetById(int postId);
           IEnumerable<PDbTable> GetAll();
+          IEnumerable<PostMinimal> GetAllByAuthor(int authorId);
+          IEnumerable<PostMinimal> GetPostsByCategory(string category);
      }
 }

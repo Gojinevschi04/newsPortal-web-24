@@ -35,6 +35,13 @@ namespace NewsPortal.BusinessLogic
           {
                return _context.Posts.ToList();
           }
-
+          public IEnumerable<PostMinimal> GetAllByAuthor(int authorId)
+          {
+               return ReturnPostsByAuthor(authorId);
+          }
+          public IEnumerable<PostMinimal> GetPostsByCategory(string category)
+          {
+               return ReturnPostsByCategory(category);
+          }
      }
 }

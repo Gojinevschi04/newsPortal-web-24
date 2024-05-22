@@ -3,21 +3,34 @@ using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.User;
 using System.Web;
 using System;
-using System.Collections.Generic;  
+using System.Collections.Generic;
 using System.Data.Entity;
-using NewsPortal.BusinessLogic.DbModel; 
 using System.Linq;
-
+using System.Web;
+using NewsPortal.BusinessLogic.DbModel;
+using NewsPortal.Domain.Entities.Post;
 
 namespace NewsPortal.BusinessLogic
 {
-     public class SessionBL: UserApi, ISession    
+     public class SessionBL : UserApi, ISession
      {
+          private readonly UserContext _context;
+          public SessionBL()
+          {
+               _context = new UserContext();
+          }
+          public SessionBL(UserContext context)
+          {
+               _context = context;
+          }
+          public IEnumerable<UDbTable> GetAll()
+          {
+               return _context.Users.ToList();
+          }
           public ULoginResp UserLogin(ULoginData data)
           {
                return UserLoginAction(data);
           }
-
           public ULoginResp URegisterAction(URegisterData data)
           {
                return RegisterData(data);
@@ -26,7 +39,6 @@ namespace NewsPortal.BusinessLogic
           {
                return Cookie(loginCredential);
           }
-
           public UserMinimal GetUserByCookie(string apiCookieValue)
           {
                return UserCookie(apiCookieValue);

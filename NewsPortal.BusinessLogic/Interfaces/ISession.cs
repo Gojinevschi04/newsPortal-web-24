@@ -10,6 +10,7 @@ namespace NewsPortal.BusinessLogic.Interfaces
 {
      public interface ISession
      {
+          IEnumerable<UDbTable> GetAll();
           ULoginResp UserLogin(ULoginData data);
           ULoginResp URegisterAction(URegisterData data);
           HttpCookie GenCookie(string loginCredential);

@@ -41,7 +41,82 @@ namespace NewsPortal.BusinessLogic.Core
 
                return response;
           }
+          public IEnumerable<PostMinimal> ReturnPostsByCategory(string category)
+          {
+               List<PostMinimal> list = new List<PostMinimal>();
+               using (var db = new PostContext())
+               {
+                    var results = db.Posts.Where(a => a.Category == category);
 
+                    foreach (var item in results)
+                    {
+                         var postMinimal = new PostMinimal
+                         {
+                              Id = item.Id,
+                              Title = item.Title,
+                              Content = item.Content,
+                              ImagePath = item.ImagePath,
+                              Category = item.Category
+                         };
+
+                         list.Add(postMinimal);
+                    }
+               }
+
+               return list.ToList();
+          }
+
+          public IEnumerable<PostMinimal> ReturnPostsByKey(string key)
+          {
+               List<PostMinimal> list = new List<PostMinimal>();
+               using (var db = new PostContext())
+               {
+                    var results = db.Posts.Where(item => item.Title.Contains(key)
+                                                         || item.Content.Contains(key)
+                    );
+
+                    foreach (var item in results)
+                    {
+                         var postMinimal = new PostMinimal
+                         {
+                              Id = item.Id,
+                              Title = item.Title,
+                              Content = item.Content,
+                              ImagePath = item.ImagePath,
+                              Category = item.Category
+                         };
+
+                         list.Add(postMinimal);
+                    }
+               }
+
+               return list.ToList();
+          }
+          public IEnumerable<PostMinimal> ReturnPostsByAuthor(int authorId)
+          {
+               List<PostMinimal> list = new List<PostMinimal>();
+               using (var db = new PostContext())
+               {
+                    var results = db.Posts.Where(a => a.AuthorId == authorId);
+
+                    foreach (var item in results)
+                    {
+                         var postMinimal = new PostMinimal
+                         {
+                              Id = item.Id,
+                              Title = item.Title,
+                              Content = item.Content,
+                              Category = item.Category,
+                              ImagePath = item.ImagePath,
+                              DateAdded = item.DateAdded
+                         };
+
+                         list.Add(postMinimal);
+                    }
+               }
+
+               return list.ToList();
+          }
 
      }
 }
