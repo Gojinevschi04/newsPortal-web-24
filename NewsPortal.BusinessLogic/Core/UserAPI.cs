@@ -137,8 +137,8 @@ namespace NewsPortal.BusinessLogic.Core
                     Id = currentUser.Id,
                     Email = currentUser.Email,
                     LastLogin = DateTime.Now,
-                    LasIp = "0.0.0.0",
-                    Level = URole.User
+                    LastIp = currentUser.LastIp,
+                    Level = currentUser.Level
                };
 
                // Mapper.Initialize(cfg => cfg.CreateMap<UDbTable, UserMinimal>());

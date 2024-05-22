@@ -1894,15 +1894,24 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ListingController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Extension\HttpsContextExtension.cs" />
     <Compile Include="Filters\AdminMod.cs" />
+    <Compile Include="Filters\AuthenticationStatus.cs" />
+    <Compile Include="Filters\AuthorizedMod.cs" />
+    <Compile Include="Filters\ReporterMod.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ListingPageData.cs" />
+    <Compile Include="Models\PostData.cs" />
+    <Compile Include="Models\SideBarData.cs" />
     <Compile Include="Models\UDataRegister.cs" />
     <Compile Include="Models\UserData.cs" />
     <Compile Include="Models\UserLogin.cs" />
@@ -1939,6 +1948,11 @@
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Listing\Index.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Post\Detail.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
