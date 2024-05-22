@@ -1959,6 +1959,7 @@
     <Content Include="Views\Reporter\Posts.cshtml" />
     <Content Include="Views\Admin\EditPost.cshtml" />
     <Content Include="Views\Reporter\EditPost.cshtml" />
+    <Content Include="Views\Admin\EditUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

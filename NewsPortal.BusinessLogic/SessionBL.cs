@@ -42,5 +42,9 @@ namespace NewsPortal.BusinessLogic
           {
                return UserCookie(apiCookieValue);
           }
+          public UEditData GetUserById(int userId)
+          {
+               return ReturnUserById(userId);
+          }
      }
 }

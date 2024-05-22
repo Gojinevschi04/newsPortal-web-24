@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
@@ -42,6 +43,42 @@ namespace NewsPortal.Web.Controllers
                return View(allUsers);
           }
 
+          public ActionResult EditUser(int? userId)
+          {
+               if (userId == null) return View();
+               var userData = _session.GetUserById((int)userId);
+               if (userData != null)
+               {
+                    var userModel = new UserData()
+                    {
+                         Id = userData.Id,
+                         Username = userData.Username,
+                         FirstName = userData.FirstName,
+                         LastName = userData.LastName,
+                         Email = userData.Email,
+                         Level = userData.Level
+                    };
+                    return View(userModel);
+               }
+
+               return RedirectToAction("Index", "Login");
+          }
+
+          public ActionResult DeleteUser(int? userId)
+          {
+               using (var db = new UserContext())
+               {
+                    var userToDelete = db.Users.Find((int)userId);
+                    if (userToDelete == null)
+                    {
+                         return HttpNotFound();
+                    }
+
+                    db.Users.Remove(userToDelete);
+                    db.SaveChanges();
+                    return RedirectToAction("Users");
+               }
+          }
 
           public ActionResult Posts()
           {

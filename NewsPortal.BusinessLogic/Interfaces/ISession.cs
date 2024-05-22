@@ -15,5 +15,6 @@ namespace NewsPortal.BusinessLogic.Interfaces
           ULoginResp URegisterAction(URegisterData data);
           HttpCookie GenCookie(string loginCredential);
           UserMinimal GetUserByCookie(string apiCookieValue);
+          UEditData GetUserById(int userId);
      }
 }
