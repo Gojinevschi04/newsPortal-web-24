@@ -14,24 +14,33 @@ namespace NewsPortal.Domain.Entities.User
 
         [Required]
         [Display(Name = "Username")]
-        [StringLength(30, MinimumLength = 5, ErrorMessage = "Username cannot be longer than 30 characters.")]
+       // [StringLength(8,  ErrorMessage = "Username cannot be longer than 30 characters.")]
         public string Username { get; set; }
 
         [Required]
         [Display(Name = "Password")]
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Password cannot be shorter than 8 characters.")]
+        //[StringLength(8,  ErrorMessage = "Password cannot be shorter than 8 characters.")]
         public string Password { get; set; }
 
         [Required]
         [Display(Name = "Email Address")]
-        [StringLength(30)]
+       // [StringLength(5)]
         public string Email { get; set; }
 
-        [DataType(DataType.Date)] 
-        public DateTime LastLogin { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        //[StringLength(5)]
+        public string FirstName { get; set; }
 
-        [StringLength(30)] 
-        public string LasIp { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+         // [StringLength(5)]
+        public string LastName { get; set; }
+
+        [DataType(DataType.Date)] public DateTime LastLogin { get; set; }
+
+        public string LastIp { get; set; }
 
         public URole Level { get; set; }
     }

@@ -1,6 +1,12 @@
 ﻿using NewsPortal.BusinessLogic.Core;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.User;
+using System.Web;
+using System;
+using System.Collections.Generic;  
+using System.Data.Entity;
+using NewsPortal.BusinessLogic.DbModel; 
+using System.Linq;
 
 
 namespace NewsPortal.BusinessLogic
@@ -10,6 +16,20 @@ namespace NewsPortal.BusinessLogic
           public ULoginResp UserLogin(ULoginData data)
           {
                return UserLoginAction(data);
+          }
+
+          public ULoginResp URegisterAction(URegisterData data)
+          {
+               return RegisterData(data);
+          }
+          public HttpCookie GenCookie(string loginCredential)
+          {
+               return Cookie(loginCredential);
+          }
+
+          public UserMinimal GetUserByCookie(string apiCookieValue)
+          {
+               return UserCookie(apiCookieValue);
           }
      }
 }
