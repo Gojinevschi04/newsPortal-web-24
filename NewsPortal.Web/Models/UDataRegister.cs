@@ -7,7 +7,6 @@ namespace NewsPortal.Web.Models
 {
      public class UDataRegister
      {
-
           public string FirstName { get; set; }
 
           public string LastName { get; set; }

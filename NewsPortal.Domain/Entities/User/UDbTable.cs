@@ -33,13 +33,12 @@ namespace NewsPortal.Domain.Entities.User
         public string FirstName { get; set; }
 
 
-          [Required]
-          [Display(Name = "Last Name")]
+        [Required]
+        [Display(Name = "Last Name")]
          // [StringLength(5)]
-          public string LastName { get; set; }
+        public string LastName { get; set; }
 
-        [DataType(DataType.Date)] 
-        public DateTime LastLogin { get; set; }
+        [DataType(DataType.Date)] public DateTime LastLogin { get; set; }
 
         public string LastIp { get; set; }
 
