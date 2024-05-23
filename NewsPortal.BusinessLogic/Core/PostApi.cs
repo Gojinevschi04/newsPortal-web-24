@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NewsPortal.BusinessLogic.DbModel;
 using NewsPortal.Domain.Entities.Post;
+using NewsPortal.Domain.Entities.User;
 
 namespace NewsPortal.BusinessLogic.Core
 {
@@ -114,8 +116,48 @@ namespace NewsPortal.BusinessLogic.Core
                          list.Add(postMinimal);
                     }
                }
-
                return list.ToList();
+          }
+          public ServiceResponse ReturnEditedPost(PEditData existingPost)
+          {
+               var response = new ServiceResponse();
+               using (var db = new PostContext())
+               {
+                    try
+                    {
+                         var postToEdit = db.Posts.Find(existingPost.Id);
+                         if (postToEdit != null)
+                         {
+                              postToEdit.Id = existingPost.Id;
+                              postToEdit.Title = existingPost.Title;
+                              postToEdit.Content = existingPost.Content;
+                              postToEdit.Category = existingPost.Category;
+                              postToEdit.ImagePath = existingPost.ImagePath;
+                              postToEdit.Author = existingPost.Author;
+                              postToEdit.AuthorId = existingPost.AuthorId;
+                              postToEdit.DateAdded = existingPost.DateAdded;
+
+                              db.SaveChanges();
+                              response.Status = true;
+                              response.PostId = postToEdit.Id;
+                              response.StatusMessage = "Your post was edited successfully!";
+                         }
+                         else
+                         {
+                              response.PostId = 0;
+                              response.Status = false;
+                              response.StatusMessage = "Post not found!";
+                         }
+                    }
+                    catch (Exception ex)
+                    {
+                         response.PostId = 0;
+                         response.Status = false;
+                         response.StatusMessage = "An error occurred!";
+                    }
+               }
+
+               return response;
           }
 
      }

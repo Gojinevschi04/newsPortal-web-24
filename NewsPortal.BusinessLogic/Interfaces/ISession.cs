@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 
 namespace NewsPortal.BusinessLogic.Interfaces
@@ -16,5 +17,7 @@ namespace NewsPortal.BusinessLogic.Interfaces
           HttpCookie GenCookie(string loginCredential);
           UserMinimal GetUserByCookie(string apiCookieValue);
           UEditData GetUserById(int userId);
+          ServiceResponse EditProfileAction(UEditData existingUser);
+          ServiceResponse ChangePassword(UChangePasswordData password);
      }
 }

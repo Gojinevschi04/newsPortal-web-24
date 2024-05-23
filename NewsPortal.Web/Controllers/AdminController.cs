@@ -5,10 +5,12 @@ using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Web.Extension;
+using NewsPortal.Web.Filters;
 using NewsPortal.Web.Models;
 
 namespace NewsPortal.Web.Controllers
 {
+     [AdminMod]
      public class AdminController : BaseController
      {
           public readonly ISession _session;
@@ -64,6 +66,36 @@ namespace NewsPortal.Web.Controllers
                return RedirectToAction("Index", "Login");
           }
 
+          [HttpPost]
+          public ActionResult EditUser(UserData data)
+          {
+               //SessionStatus();
+               //var user = System.Web.HttpContext.Current.GetMySessionObject();
+
+               if (ModelState.IsValid)
+               {
+                    UEditData existingUser = new UEditData
+                    {
+                         Id = data.Id,
+                         Username = data.Username,
+                         FirstName = data.FirstName,
+                         LastName = data.LastName,
+                         Email = data.Email,
+                         Level = data.Level
+                    };
+                    var response = _session.EditProfileAction(existingUser);
+                    if (response.Status)
+                    {
+                         return RedirectToAction("Users", "Admin", new { PostID = response.PostId });
+                    }
+
+                    ModelState.AddModelError("", response.StatusMessage);
+                    return View(data);
+               }
+
+               return View();
+          }
+
           public ActionResult DeleteUser(int? userId)
           {
                using (var db = new UserContext())
@@ -87,9 +119,11 @@ namespace NewsPortal.Web.Controllers
                foreach (var post in data)
                {
                     var postMinimal = new PostMinimal();
+                    postMinimal.Id = post.Id;
                     postMinimal.Title = post.Title;
                     postMinimal.Content = post.Content;
                     postMinimal.Category = post.Category;
+                    postMinimal.Author = post.Author;
                     postMinimal.DateAdded = post.DateAdded;
                     allPosts.Add(postMinimal);
                }
@@ -119,12 +153,44 @@ namespace NewsPortal.Web.Controllers
                }
           }
 
+          [HttpPost]
+          public ActionResult EditPost(PostData data)
+          {
+               //SessionStatus();
+               //var user = System.Web.HttpContext.Current.GetMySessionObject();
+
+               if (ModelState.IsValid)
+               {
+                    PEditData existingPost = new PEditData()
+                    {
+                         Id = data.Id,
+                         Title = data.Title,
+                         Content = data.Content,
+                         Category = data.Category,
+                         Author = data.Author,
+                         DateAdded = data.DateAdded
+                    };
+                    var response = _post.EditPostAction(existingPost);
+                    if (response.Status)
+                    {
+                         return RedirectToAction("Detail", "Post", new { PostID = response.PostId });
+                    }
+                    else
+                    {
+                         ModelState.AddModelError("", response.StatusMessage);
+                         return View(data);
+                    }
+               }
+
+               return View();
+          }
+
           public ActionResult DeletePost(int? postId)
           {
                SessionStatus();
                var user = System.Web.HttpContext.Current.GetMySessionObject();
                var postToDelete = _post.GetById((int)postId);
-               if (postToDelete == null && user.Username == postToDelete.Author)
+               if(postToDelete == null)
                {
                     return HttpNotFound();
                }

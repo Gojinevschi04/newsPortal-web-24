@@ -4,10 +4,12 @@ using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Web.Extension;
+using NewsPortal.Web.Filters;
 using NewsPortal.Web.Models;
 
 namespace NewsPortal.Web.Controllers
 {
+     [ReporterMod]
      public class ReporterController : BaseController
      {
           public readonly ISession _session;
@@ -29,6 +31,7 @@ namespace NewsPortal.Web.Controllers
                foreach (var post in data)
                {
                     var postMinimal = new PostMinimal();
+                    postMinimal.Id = post.Id;
                     postMinimal.Title = post.Title;
                     postMinimal.Content = post.Content;
                     postMinimal.Category = post.Category;
@@ -60,6 +63,50 @@ namespace NewsPortal.Web.Controllers
                     return RedirectToAction("Index", "Login");
                }
           }
+
+          [HttpPost]
+          public ActionResult EditPost(PostData data)
+          {
+               if (ModelState.IsValid)
+               {
+                    PEditData existingPost = new PEditData()
+                    {
+                         Id = data.Id,
+                         Title = data.Title,
+                         Content = data.Content,
+                         Category = data.Category,
+                         Author = data.Author,
+                         DateAdded = data.DateAdded
+                    };
+                    var response = _post.EditPostAction(existingPost);
+                    if (response.Status)
+                    {
+                         return RedirectToAction("Detail", "Post", new { PostID = response.PostId });
+                    }
+                    else
+                    {
+                         ModelState.AddModelError("", response.StatusMessage);
+                         return View(data);
+                    }
+               }
+
+               return View();
+          }
+
+          public ActionResult DeletePost(int postId)
+          {
+               SessionStatus();
+               var postToDelete = _post.GetById(postId);
+               if (postToDelete == null)
+               {
+                    return HttpNotFound();
+               }
+
+               _post.Delete((int)postId);
+               _post.Save();
+               return RedirectToAction("Posts", "Reporter");
+          }
+
           public ActionResult Comments()
           {
                return View();

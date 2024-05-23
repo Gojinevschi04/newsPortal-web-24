@@ -35,7 +35,7 @@ namespace NewsPortal.Web.Controllers
                     ULoginData data = new ULoginData
                     {
                          Email = login.Email,
-                         //Username = login.Username,
+                         Username = login.Username,
                          Password = login.Password,
                          LoginIp = Request.UserHostAddress,
                          LoginDateTime = DateTime.Now

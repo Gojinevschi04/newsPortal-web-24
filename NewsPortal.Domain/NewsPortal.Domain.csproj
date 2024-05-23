@@ -54,9 +54,11 @@
   <ItemGroup>
     <Compile Include="Entities\Post\NewPostData.cs" />
     <Compile Include="Entities\Post\PDbTable.cs" />
+    <Compile Include="Entities\Post\PEditData.cs" />
     <Compile Include="Entities\Post\PostMinimal.cs" />
     <Compile Include="Entities\Post\ServiceResponse.cs" />
     <Compile Include="Entities\User\Session.cs" />
+    <Compile Include="Entities\User\UChangePasswordData.cs" />
     <Compile Include="Entities\User\UDbTable.cs" />
     <Compile Include="Entities\User\UEditData.cs" />
     <Compile Include="Entities\User\ULoginData.cs" />

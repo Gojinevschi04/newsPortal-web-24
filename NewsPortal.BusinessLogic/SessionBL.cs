@@ -46,5 +46,13 @@ namespace NewsPortal.BusinessLogic
           {
                return ReturnUserById(userId);
           }
+          public ServiceResponse EditProfileAction(UEditData existingUser)
+          {
+               return ReturnEditedProfile(existingUser);
+          }
+          public ServiceResponse ChangePassword(UChangePasswordData password)
+          {
+               return ReturnChangedPassword(password);
+          }
      }
 }

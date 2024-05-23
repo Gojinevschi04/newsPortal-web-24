@@ -55,5 +55,9 @@ namespace NewsPortal.BusinessLogic
           {
                _context.SaveChanges();
           }
+          public ServiceResponse EditPostAction(PEditData existingPost)
+          {
+               return ReturnEditedPost(existingPost);
+          }
      }
 }
