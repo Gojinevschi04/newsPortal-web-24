@@ -17,6 +17,8 @@ namespace NewsPortal.BusinessLogic.Core
                 Content = data.Content,
                 Category = data.Category,
                 DateAdded = data.DateAdded,
+                ImagePath = data.ImagePath,
+                AuthorId = data.AuthorId,
                 Author = data.Author
             };
 

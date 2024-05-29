@@ -9,48 +9,48 @@ using NewsPortal.Web.Models;
 
 namespace NewsPortal.Web.Controllers
 {
-     public class RegisterController : BaseController
-     {
-          private readonly ISession _session;
+    public class RegisterController : BaseController
+    {
+        private readonly ISession _session;
 
-          public RegisterController()
-          {
-               var bl = new BusinessLogic.BusinessLogic();
-               _session = bl.GetSessionBL();
-          }
+        public RegisterController()
+        {
+            var bl = new BusinessLogic.BusinessLogic();
+            _session = bl.GetSessionBL();
+        }
 
-          // GET: Register
-          public ActionResult Index()
-          {
-               return View();
-          }
+        // GET: Register
+        public ActionResult Index()
+        {
+            return View();
+        }
 
 
-          [HttpPost]
-          public ActionResult Index(UDataRegister login)
-          {
-               var URData = new URegisterData
-               {
-                    FirstName = login.FirstName,
-                    LastName = login.LastName,
-                    Password = login.Password,
-                    Username = login.Username,
-                    Email = login.Email,
-                    LoginDataTime = DateTime.Now,
-                    Ip = Request.UserHostAddress
-               };
+        [HttpPost]
+        public ActionResult Index(UDataRegister login)
+        {
+            var URData = new URegisterData
+            {
+                FirstName = login.FirstName,
+                LastName = login.LastName,
+                Password = login.Password,
+                Username = login.Username,
+                Email = login.Email,
+                LoginDataTime = DateTime.Now,
+                Ip = Request.UserHostAddress
+            };
 
-               ULoginResp resp = _session.URegisterAction(URData);
+            ULoginResp resp = _session.URegisterAction(URData);
 
-               if (resp.Status == true)
-               {
-                    HttpCookie cookie = _session.GenCookie(login.Email);
-                    ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+            if (resp.Status == true)
+            {
+                HttpCookie cookie = _session.GenCookie(login.Email);
+                ControllerContext.HttpContext.Response.Cookies.Add(cookie);
 
-                    return RedirectToAction("Index", "Login");
-               }
+                return RedirectToAction("Index", "Login");
+            }
 
-               return Redirect("/Home/Index");
-          }
-     }
+            return Redirect("/Login/Index");
+        }
+    }
 }

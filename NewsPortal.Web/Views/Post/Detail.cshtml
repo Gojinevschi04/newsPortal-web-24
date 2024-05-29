@@ -1,50 +1,81 @@
 ﻿@{
-     Layout = "~/Views/Shared/_Layout.cshtml";
-     ViewBag.Title = @Model.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = @Model.Title;
 }
 @model NewsPortal.Web.Models.PostData
 
 <div class="container-xl px-4">
-     <div class="card mb-4">
-          <div class="card-header d-flex align-items-center">
-               <div class="ms-3">
-                    <h4 class="m-0 font-weight-bold text-primary text-justify"> @Model.Title</h4>
-               </div>
-          </div>
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center">
+            <div class="ms-3">
+                <h4 class="m-0 font-weight-bold text-primary text-justify"> @Model.Title</h4>
+            </div>
+        </div>
 
-          <div class="text-center" style="width:100%; ">
-               @if (Model.ImagePath != null)
-               {
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width:80%; max-height: 900px" src="@Url.Content(Model.ImagePath)" alt="...">
-               }
-               else
-               {
-                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 500px;height: 600px" src="~/Content/img/undraw_rocket.svg" alt="...">
-               }
+        <div class="text-center" style="width:100%; ">
+            @if (Model.ImagePath != null)
+            {
+                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width:80%; max-height: 900px" src="@Url.Content(Model.ImagePath)" alt="...">
+            }
+            else
+            {
+                <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 500px;height: 600px" src="~/Content/img/undraw_rocket.svg" alt="...">
+            }
 
-          </div>
+        </div>
 
-          <div class="card-body text-justify">
-               @Model.Content
-               <hr> @Model.DateAdded
-          </div>
+        <div class="card-body text-justify">
+            @Model.Content
+            <hr> @Model.DateAdded
+        </div>
 
-     </div>
+    </div>
 </div>
 
 <!-- Collapsable Card Example -->
 <div class="container-xl px-4">
 
-     <div class="card shadow mb-4">
-          <!-- Card Header - Accordion -->
-          <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
-             role="button" aria-expanded="true" aria-controls="collapseCardExample">
-               <h5 class="m-0 font-weight-bold text-primary">Commentaries</h5>
-          </a>
-          <!-- Card Content - Collapse -->
-          <div class="collapse" id="collapseCardExample">
-               @* //default trebuie fara show la class *@
-          </div>
-     </div>
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+           role="button" aria-expanded="true" aria-controls="collapseCardExample">
+            <h5 class="m-0 font-weight-bold text-primary">Commentaries</h5>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse" id="collapseCardExample">
+            @* //default trebuie fara show la class *@
+            @foreach (var commentary in Model.Comments)
+            {
+                <div class="card-body">
+                    <strong class="text-gray-800">@commentary.Author</strong>
+                    @commentary.DateAdded
+                    <br>
+                    <span class="text-gray-900">
+                        @commentary.Content
+                    </span>
+                </div>
+            }
+            <br>
+            @using (Html.BeginForm("AddComment", "Comment", FormMethod.Post))
+            {
+                <div class="card-body p-0">
+                    <div class="col-lg-7">
+                        <form class="title">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <textarea class="form-control form-control-text" id="exampleContent" placeholder="Add a comment" name="Content" rows="2" required="" ></textarea>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-user btn-block" type="submit">
+                                Add commentary
+                            </button>
+                            @Html.Hidden("PostId", Model.Id) <!-- Add a hidden input field for the post ID -->
+                        </form>
+                    </div>
+                    <br>
+                </div>
+            }
+        </div>
+    </div>
 
 </div>
