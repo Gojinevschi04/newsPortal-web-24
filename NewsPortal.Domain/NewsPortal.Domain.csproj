@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,8 +52,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Comment\CDbTable.cs" />
+    <Compile Include="Entities\Comment\CEditData.cs" />
+    <Compile Include="Entities\Comment\CommentMinimal.cs" />
+    <Compile Include="Entities\Comment\NewCommentData.cs" />
+    <Compile Include="Entities\Post\NewPostData.cs" />
+    <Compile Include="Entities\Post\PDbTable.cs" />
+    <Compile Include="Entities\Post\PEditData.cs" />
+    <Compile Include="Entities\Post\PostMinimal.cs" />
+    <Compile Include="Entities\Post\ServiceResponse.cs" />
     <Compile Include="Entities\User\Session.cs" />
+    <Compile Include="Entities\User\UChangePasswordData.cs" />
     <Compile Include="Entities\User\UDbTable.cs" />
+    <Compile Include="Entities\User\UEditData.cs" />
     <Compile Include="Entities\User\ULoginData.cs" />
     <Compile Include="Entities\User\ULoginResp.cs" />
     <Compile Include="Entities\User\URegisterData.cs" />

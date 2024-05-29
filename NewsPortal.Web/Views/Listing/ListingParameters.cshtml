@@ -1,0 +1,61 @@
+﻿@{
+     Layout = "~/Views/Shared/_Layout.cshtml";
+     ViewBag.Title = "Listing";
+}
+
+@model NewsPortal.Web.Models.ListingPageData
+
+@if (Model == null || !Model.ListingItems.Any())
+{
+     <h3>No posts found!</h3>
+}
+
+@if (Model != null)
+{
+     foreach (var item in Model.ListingItems)
+     {
+          string firstSentence = item.Content.Substring(0, Math.Min(item.Content.Length, 200)); // Extrage primele 100 de caractere
+          int firstPeriodIndex = firstSentence.IndexOf('.'); // Găsește poziția primului punct
+          if (firstPeriodIndex != -1) // Verifică dacă s-a găsit un punct
+          {
+               firstSentence = firstSentence.Substring(0, firstPeriodIndex + 1); // Extrage textul până la primul punct inclusiv
+          }
+
+          <div class="container-lg px-4">
+               <div class="card shadow mb-4">
+                    <div class="row g-lg-5">
+                         @* <div class="m-3"> *@
+                         @* </div> *@
+
+                         <div class="card-img col-2 d-flex align-items-center" style="padding-right: 0; height: 150px">
+                              @if (item.ImagePath != null)
+                              {
+                                   <img src="@Url.Content(item.ImagePath)" class="img-fluid w-100" style="border-radius:5px 0 0 5px ;margin:0; width: 100%; height: 100%; object-fit: cover;" alt="Ad Name">
+                              }
+                              else
+                              {
+                                   <img src="~/Content/img/undraw_rocket.svg" class="img-fluid w-100" style="border-radius:5px 0 0 5px ;margin:0; width: 100%; height: 100%; object-fit: cover;" alt="Ad Name">
+                              }
+                         </div>
+
+                         <div class="col m-0" style="padding-left: 0">
+                              <div class="card-header py-3">
+                                   <h5 class="m-0 font-weight-bold text-primary text-justify">
+                                        <a href="@Url.Action("Detail", "Post", new { PostId = item.Id })"> @item.Title </a>
+                                   </h5>
+                              </div>
+                              <div class="card-body">
+                                   <p class="card-text mb-1 text-justify">
+                                        @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
+                                        @if (item.Content.Length > 300 && firstPeriodIndex != -1)
+                                        {
+                                             <span>...</span>
+                                        }
+                                   </p>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+     }
+}

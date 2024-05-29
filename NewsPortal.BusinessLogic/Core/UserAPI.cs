@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using NewsPortal.BusinessLogic.DbModel;
+using NewsPortal.Domain.Entities.Post;
 using NewsPortal.Domain.Entities.User;
 using NewsPortal.Domain.Enums;
 using NewsPortal.Helpers;
@@ -137,14 +138,98 @@ namespace NewsPortal.BusinessLogic.Core
                     Id = currentUser.Id,
                     Email = currentUser.Email,
                     LastLogin = DateTime.Now,
-                    LasIp = "0.0.0.0",
-                    Level = URole.User
+                    LastIp = currentUser.LastIp,
+                    Level = currentUser.Level
                };
 
                // Mapper.Initialize(cfg => cfg.CreateMap<UDbTable, UserMinimal>());
                // var userminimal = Mapper.Map<UserMinimal>(curentUser);
 
                return userMinimal;
+          }
+          public UEditData ReturnUserById(int userId)
+          {
+               using (var db = new UserContext())
+               {
+                    var user = db.Users.Find(userId);
+                    if (user != null)
+                    {
+                         var foundUser = new UEditData()
+                         {
+                              Username = user.Username,
+                              Email = user.Email,
+                              FirstName = user.FirstName,
+                              LastName = user.LastName,
+                              Level = user.Level,
+                              Id = user.Id
+                         };
+                         return foundUser;
+                    }
+                    else
+                    {
+                         return null;
+                    }
+               }
+          }
+          public ServiceResponse ReturnEditedProfile(UEditData existingUser)
+          {
+               var response = new ServiceResponse();
+               using (var db = new UserContext())
+               {
+                    try
+                    {
+                         var userToEdit = db.Users.Find(existingUser.Id);
+                         if (userToEdit != null)
+                         {
+                              userToEdit.Id = existingUser.Id;
+                              userToEdit.Username = existingUser.Username;
+                              userToEdit.Email = existingUser.Email;
+                              userToEdit.FirstName = existingUser.FirstName;
+                              userToEdit.LastName = existingUser.LastName;
+                              userToEdit.Level = existingUser.Level;
+
+                              db.SaveChanges();
+                              response.Status = true;
+                              response.PostId = userToEdit.Id;
+                              response.StatusMessage = "User Profile was edited successfully!";
+                         }
+                         else
+                         {
+                              response.PostId = 0;
+                              response.Status = false;
+                              response.StatusMessage = "User not found!";
+                         }
+                    }
+                    catch (Exception ex)
+                    {
+                         response.PostId = 0;
+                         response.Status = false;
+                         response.StatusMessage = "An error occurred!";
+                    }
+               }
+
+               return response;
+          }
+          public ServiceResponse ReturnChangedPassword(UChangePasswordData password)
+          {
+               using (var db = new UserContext())
+               {
+                    try
+                    {
+                         var user = db.Users.Find(password.Id);
+
+                         if (user == null || user.Password != LoginHelper.HashGen(password.OldPassword))
+                              return new ServiceResponse { Status = false, StatusMessage = "An error occurred!" };
+                         user.Password = LoginHelper.HashGen(password.NewPassword);
+                         db.SaveChanges();
+                         return new ServiceResponse()
+                         { Status = true, StatusMessage = "Password has been changed successfully!" };
+                    }
+                    catch
+                    {
+                         return new ServiceResponse { Status = false, StatusMessage = "An error occurred!" };
+                    }
+               }
           }
      }
 }

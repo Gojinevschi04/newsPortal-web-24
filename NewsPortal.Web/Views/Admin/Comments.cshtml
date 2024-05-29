@@ -1,0 +1,77 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Comments";
+}
+
+@model System.Collections.Generic.List<NewsPortal.Domain.Entities.Comment.CommentMinimal>
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Comments</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Content</th>
+                        <th>Author</th>
+                        <th>PostID</th>
+                        <th>Date Added</th>
+                        <th></th>
+                        <th></th>
+
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    @if (Model != null)
+                    {
+                        foreach (var comment in Model)
+                        {
+                            string firstSentence = comment.Content.Substring(0, Math.Min(comment.Content.Length, 100)); // Extrage primele 100 de caractere
+                            int firstPeriodIndex = firstSentence.IndexOf('.'); // Găsește poziția primului punct
+                            if (firstPeriodIndex != -1) // Verifică dacă s-a găsit un punct
+                            {
+                                firstSentence = firstSentence.Substring(0, firstPeriodIndex + 1); // Extrage textul până la primul punct inclusiv
+                            }
+
+                            <tr>
+
+                                <td>@comment.Id</td>
+                                <td>
+                                    @Html.Raw(firstSentence) <!-- Afiseaza prima frază din conținut -->
+                                    @if (comment.Content.Length > 100 && firstPeriodIndex != -1)
+                                    {
+                                        <span>...</span>
+                                    }
+                                </td>
+                                <td>@comment.Author</td>
+                                <td>@comment.PostId</td>
+                                <td>@comment.DateAdded</td>
+                                <td>
+                                    <a href="@Url.Action("EditComment", "Admin", new { commentaryId = comment.Id })" class="btn btn-primary btn-user btn-block">Edit</a>
+                                </td>
+                                <td>
+                                    <form method="post" action="@Url.Action("DeleteComment", "Admin", new { commentaryId = comment.Id })" onsubmit="return confirm('Are you sure you want to delete this commentary?');">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

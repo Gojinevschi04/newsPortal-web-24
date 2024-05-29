@@ -4,6 +4,7 @@ namespace NewsPortal.Domain.Enums
     {
         None,
         User,
+        Reporter,
         Admin
     }
 }

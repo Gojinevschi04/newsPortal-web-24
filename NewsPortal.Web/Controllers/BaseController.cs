@@ -5,9 +5,11 @@ using System.Web.Mvc;
 using NewsPortal.BusinessLogic;
 using NewsPortal.BusinessLogic.Interfaces;
 using NewsPortal.Web.Extension;
+using NewsPortal.Web.Filters;
 
 namespace NewsPortal.Web.Controllers
 {
+     [AuthenticationStatus]
      public class BaseController : Controller
      {
           private readonly ISession _session;
@@ -49,6 +51,21 @@ namespace NewsPortal.Web.Controllers
                {
                     System.Web.HttpContext.Current.Session["LoginStatus"] = "logout";
                }
+          }
+          public void Logout()
+          {
+               System.Web.HttpContext.Current.Session.Clear();
+
+               if (ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("X-KEY"))
+               {
+                    var cookie = ControllerContext.HttpContext.Request.Cookies["X-KEY"];
+                    if (cookie != null)
+                    {
+                         cookie.Expires = DateTime.Now.AddDays(-1);
+                         ControllerContext.HttpContext.Response.Cookies.Add(cookie);
+                    }
+               }
+               System.Web.HttpContext.Current.Session["LoginStatus"] = "logout";
           }
      }
 }
