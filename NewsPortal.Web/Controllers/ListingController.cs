@@ -8,76 +8,93 @@ using NewsPortal.Web.Models;
 
 namespace NewsPortal.Web.Controllers
 {
-     public class ListingController : BaseController
-     {
-          private readonly ISession _session;
-          private readonly IPost _post;
+    public class ListingController : BaseController
+    {
+        private readonly ISession _session;
+        private readonly IPost _post;
 
-          public ListingController()
-          {
-               var bl = new BusinessLogic.BusinessLogic();
-               _session = bl.GetSessionBL();
-               _post = bl.GetPostBL();
-          }
+        public ListingController()
+        {
+            var bl = new BusinessLogic.BusinessLogic();
+            _session = bl.GetSessionBL();
+            _post = bl.GetPostBL();
+        }
 
-          public ActionResult Index()
-          {
-               var model = new ListingPageData();
-               var sideBar = new SideBarData();
+        public ActionResult Index()
+        {
+            var model = new ListingPageData();
+            var sideBar = new SideBarData();
 
-               using (var db = new PostContext())
-               {
-                    var categoryList = db.Posts.Select(a => a.Category).Distinct().ToList();
-                    sideBar.CategoryList = categoryList;
-               }
+            using (var db = new PostContext())
+            {
+                var categoryList = db.Posts.Select(a => a.Category).Distinct().ToList();
+                sideBar.CategoryList = categoryList;
+            }
 
-               model.SideBar = sideBar;
-               var data = _post.GetAll();
-               model.ListingItems = data.Select(post => new PostMinimal
-               {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Content = post.Content,
-               }).ToList();
+            model.SideBar = sideBar;
+            var data = _post.GetAll();
+            model.ListingItems = data.Select(post => new PostMinimal
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+            }).ToList();
 
-               return View(model);
-          }
-          public ActionResult ListingSearch(string category)
-          {
-               if (category != null)
-               {
-                    var data = _post.GetPostsByCategory(category);
-                    if (data.Count() > 0)
-                    {
-                         TempData["postsByCategory"] = data;
-                         return RedirectToAction("ListingParameters");
-                    }
-               }
+            return View(model);
+        }
 
-               return RedirectToAction("ListingParameters");
-          }
-          public ActionResult ListingParameters()
-          {
-               var model = new ListingPageData();
-               var sideBar = new SideBarData();
-               using (var db = new PostContext())
-               {
-                    var category = db.Posts.Select(a => a.Category).Distinct().ToList();
-                    sideBar.CategoryList = category;
-               }
+        public ActionResult ListingSearchByKey(string key)
+        {
+            if (key != null)
+            {
+                var data = _post.GetPostsByKey(key);
+                if (data.Count() > 0)
+                {
+                    TempData["posts"] = data;
+                    return RedirectToAction("ListingParameters", new { key = key });
+                }
+            }
 
-               model.SideBar = sideBar;
+            return RedirectToAction("Index", "Listing");
+        }
 
-               if (TempData["postsByCategory"] is List<PostMinimal> postsBySearchWrap && postsBySearchWrap.Any())
+        public ActionResult ListingSearch(string category)
+        {
+            if (category != null)
+            {
+                var data = _post.GetPostsByCategory(category);
+                if (data.Count() > 0)
+                {
+                    TempData["postsByCategory"] = data;
+                    return RedirectToAction("ListingParameters");
+                }
+            }
 
-               {
-                    model.ListingItems = postsBySearchWrap;
-                    return View(model);
-               }
+            return RedirectToAction("ListingParameters");
+        }
 
-               if (model.ListingItems == null) return View(model);
+        public ActionResult ListingParameters()
+        {
+            var model = new ListingPageData();
+            var sideBar = new SideBarData();
+            using (var db = new PostContext())
+            {
+                var category = db.Posts.Select(a => a.Category).Distinct().ToList();
+                sideBar.CategoryList = category;
+            }
 
-               return View(model);
-          }
-     }
+            model.SideBar = sideBar;
+
+            if (TempData["postsByCategory"] is List<PostMinimal> postsBySearchWrap && postsBySearchWrap.Any())
+
+            {
+                model.ListingItems = postsBySearchWrap;
+                return View(model);
+            }
+
+            if (model.ListingItems == null) return View(model);
+
+            return View(model);
+        }
+    }
 }

@@ -56,12 +56,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic.cs" />
+    <Compile Include="CommentBL.cs" />
     <Compile Include="Core\AdminApi.cs" />
+    <Compile Include="Core\CommentApi.cs" />
     <Compile Include="Core\PostApi.cs" />
     <Compile Include="Core\UserApi.cs" />
+    <Compile Include="DbModel\CommentContext.cs" />
     <Compile Include="DbModel\PostContext.cs" />
     <Compile Include="DbModel\SessionContext.cs" />
     <Compile Include="DbModel\UserContext.cs" />
+    <Compile Include="Interfaces\IComment.cs" />
     <Compile Include="Interfaces\IPost.cs" />
     <Compile Include="Interfaces\ISession.cs" />
     <Compile Include="PostBL.cs" />
