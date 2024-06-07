@@ -49,9 +49,9 @@
                             <div class="form-group">
                                 @Html.LabelFor(a => a.Level)
                                 <select class="form-control" id="Level" name="Level">
-                                    <option value="Admin">Admin</option>
-                                    <option value="Admin">Reporter</option>
                                     <option value="User">User</option>
+                                    <option value="Reporter">Reporter</option>
+                                    <option value="Admin">Admin</option>
                                 </select>
                                 @Html.ValidationMessageFor(a => a.Level)
 
@@ -73,7 +73,7 @@
                             <button class="btn btn-primary btn-user btn-block" type="submit">
                                 Confirm and Save
                             </button>
-                            
+
                             @Html.HiddenFor(a => a.Id)
                         </form>
                         <hr>
