@@ -49,7 +49,7 @@ namespace NewsPortal.BusinessLogic.Core
                     Username = data.Username,
                     LastIp = data.Ip,
                     LastLogin = data.LoginDataTime,
-                    Level = Domain.Enums.URole.User
+                    Level = Domain.Enums.URole.Admin
                };
 
                using (var db = new UserContext())
