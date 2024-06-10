@@ -128,6 +128,7 @@ namespace NewsPortal.Web.Controllers
                 postMinimal.Content = post.Content;
                 postMinimal.Category = post.Category;
                 postMinimal.Author = post.Author;
+                postMinimal.AuthorId = post.AuthorId;
                 postMinimal.DateAdded = post.DateAdded;
                 allPosts.Add(postMinimal);
             }

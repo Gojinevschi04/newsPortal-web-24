@@ -59,7 +59,7 @@ namespace NewsPortal.Web.Controllers
                         Category = postData.Category,
                         ImagePath = postData.ImagePath,
                         DateAdded = DateTime.Now,
-                        Author = user.Username,
+                        Author = user.Email,
                         AuthorId = user.Id
                     };
 

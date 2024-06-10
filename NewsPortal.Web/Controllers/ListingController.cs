@@ -56,8 +56,8 @@ namespace NewsPortal.Web.Controllers
                 }
             }
 
-            return RedirectToAction("Index", "Listing");
-        }
+               return RedirectToAction("Error", "Home");
+          }
 
         public ActionResult ListingSearch(string category)
         {

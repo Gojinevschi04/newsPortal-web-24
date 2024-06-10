@@ -37,6 +37,7 @@ namespace NewsPortal.Web.Controllers
                 postMinimal.Title = post.Title;
                 postMinimal.Content = post.Content;
                 postMinimal.Category = post.Category;
+                postMinimal.ImagePath = post.ImagePath;
                 postMinimal.DateAdded = post.DateAdded;
                 allPosts.Add(postMinimal);
             }
@@ -52,12 +53,14 @@ namespace NewsPortal.Web.Controllers
             {
                 var postModel = new PostEditData()
                 {
-                    Id = postData.Id,
-                    Title = postData.Title,
-                    Content = postData.Content,
-                    Category = postData.Category,
-                    Author = postData.Author,
-                    DateAdded = postData.DateAdded
+                     Id = postData.Id,
+                     Title = postData.Title,
+                     Content = postData.Content,
+                     Category = postData.Category,
+                     Author = postData.Author,
+                     ImagePath = postData.ImagePath,
+                     AuthorId = postData.AuthorId,
+                     DateAdded = postData.DateAdded
                 };
                 return View(postModel);
             }
