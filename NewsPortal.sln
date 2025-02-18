@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.Web", "NewsPortal.Web\NewsPortal.Web.csproj", "{3B502C03-9F16-4EE8-B1C4-7A142A653D8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastronique.Web", "Gastronique.Web\Gastronique.Web.csproj", "{3B502C03-9F16-4EE8-B1C4-7A142A653D8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.BusinessLogic", "NewsPortal.BusinessLogic\NewsPortal.BusinessLogic.csproj", "{D5793CCF-B855-46F8-A59F-6955BACB451D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastronique.BusinessLogic", "Gastronique.BusinessLogic\Gastronique.BusinessLogic.csproj", "{D5793CCF-B855-46F8-A59F-6955BACB451D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.Domain", "NewsPortal.Domain\NewsPortal.Domain.csproj", "{D2B0ABFF-4E47-4C92-ADFF-EF1A63812498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastronique.Domain", "Gastronique.Domain\Gastronique.Domain.csproj", "{D2B0ABFF-4E47-4C92-ADFF-EF1A63812498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsPortal.Helpers", "NewsPortal.Helpers\NewsPortal.Helpers.csproj", "{5B48B51A-671E-4CB5-A866-C9C8D311EBD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastronique.Helpers", "Gastronique.Helpers\Gastronique.Helpers.csproj", "{5B48B51A-671E-4CB5-A866-C9C8D311EBD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
